@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idejan Gross — Educação & Pesquisa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0d0e10;
+      --surface:   #13151a;
+      --card:      #1a1d24;
+      --border:    #25282f;
+      --gold:      #c9a84c;
+      --gold-dim:  #7d6530;
+      --text:      #dcdfe8;
+      --muted:     #7a7f8e;
+      --white:     #f4f5f7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 5vw;
+      background: rgba(13,14,16,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 5vw 5rem;
+      gap: 4rem;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: -5%;
+      width: 55vw;
+      height: 55vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      margin-top: 1.6rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 38ch;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 2.8rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 0.35rem;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #0d0e10;
+    }
+
+    .btn-gold:hover {
+      background: #d9b85c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    /* Hero right — photo placeholder */
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+
+    .hero-photo {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 3/4;
+      margin-left: auto;
+      border-radius: 1.2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Replace the src below with your real photo */
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo .photo-placeholder {
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .hero-photo .photo-placeholder svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .hero-photo .photo-placeholder p {
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: -1.2rem;
+      left: -1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.8rem;
+      padding: 1rem 1.4rem;
+    }
+
+    .hero-badge .badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-badge .badge-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 7rem 5vw;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 22ch;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .divider {
+      width: 3rem;
+      height: 1px;
+      background: var(--gold-dim);
+      margin: 2rem 0;
+    }
+
+    /* ── SOBRE / CURRÍCULO ── */
+    #sobre {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 3.5rem;
+    }
+
+    .sobre-sticky {
+      position: sticky;
+      top: 7rem;
+    }
+
+    /* ── SOBRE FOTO ── */
+    .sobre-foto {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--gold-dim);
+      box-shadow: 0 0 0 6px rgba(201,168,76,0.08);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sobre-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sobre-foto-placeholder svg {
+      width: 52px;
+      height: 52px;
+      color: var(--muted);
+      opacity: 0.3;
+    }
+
+    /* ── PESQUISA CARD ── */
+    .pesquisa-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      padding: 1.2rem 1.4rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+    }
+
+    .pesquisa-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateX(4px);
+    }
+
+    .pesquisa-card:hover .pesquisa-arrow {
+      stroke: var(--gold);
+      transform: translateX(3px);
+    }
+
+    .pesquisa-card-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .pesquisa-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .pesquisa-card-sub {
+      font-size: 0.77rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    .pesquisa-arrow {
+      margin-left: auto;
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+
+    .bio-block {
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .bio-block h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .bio-block p,
+    .bio-block li {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+    }
+
+    /* ── CURSOS ── */
+    #cursos { background: var(--bg); }
+
+    .cursos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .curso-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .curso-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold-dim);
+    }
+
+    .curso-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .curso-card:hover::before { opacity: 1; }
+
+    .curso-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+    }
+
+    .curso-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .curso-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .em-construcao {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #e8a020;
+      background: rgba(232,160,32,0.1);
+      border: 1px solid rgba(232,160,32,0.25);
+      padding: 0.25rem 0.7rem;
+      border-radius: 2rem;
+      margin-top: 1.2rem;
+    }
+
+    .em-construcao::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #e8a020;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* ── FERRAMENTAS ── */
+    #ferramentas {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ferramentas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .ferramenta-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .ferramenta-card:hover {
+      border-color: var(--gold-dim);
+      background: #1d2029;
+    }
+
+    .ferramenta-card .f-icon {
+      font-size: 1.8rem;
+    }
+
+    .ferramenta-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .ferramenta-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .ferramenta-card .f-status {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      align-self: flex-start;
+    }
+
+    .status-live { color: #4caf8c; background: rgba(76,175,140,0.12); border: 1px solid rgba(76,175,140,0.25); }
+    .status-em-breve { color: #e8a020; background: rgba(232,160,32,0.1); border: 1px solid rgba(232,160,32,0.25); }
+
+    /* ── CONTATO ── */
+    #contato {
+      text-align: center;
+      background: var(--bg);
+    }
+
+    .contato-inner {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .contato-inner .section-title {
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    .contato-inner p {
+      color: var(--muted);
+      margin-top: 1.2rem;
+      font-size: 1rem;
+    }
+
+    .contact-email {
+      display: inline-block;
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover { color: #d9b85c; }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s;
+    }
+
+    .social-link:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--gold-dim); text-decoration: none; }
+
+    /* ── CURSOS BLOQUEADOS ── */
+    .cursos-bloqueados {
+      position: relative;
+    }
+
+    .cursos-bloqueados .cursos-grid {
+      filter: blur(6px);
+      opacity: 0.45;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cursos-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .cursos-overlay-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .cursos-overlay h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    .cursos-overlay p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 7rem; }
+      .hero-visual { display: none; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .sobre-sticky { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">Idejan <span>Gross</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#ferramentas">Ferramentas</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">Química · Nanociência · Tecnologia Farmacêutica</span>
+    <h1>Idejan<br><em>Gross</em></h1>
+    <p style="font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-top:0.8rem; animation: fadeUp 0.8s 0.15s ease both;">Docente &amp; Pesquisador · Magistério EBTT — UFSC</p>
+    <p class="hero-sub">
+      Químico, pesquisador e docente com sólida formação em polímeros, nanomateriais e tecnologia farmacêutica. Atualmente professor do Ensino Básico, Técnico e Tecnológico no Colégio de Aplicação da UFSC, atuando no âmbito da pesquisa e extensão no ensino de química.
+    </p>
+    <div class="hero-actions">
+      <a href="#sobre" class="btn btn-gold">Conheça meu trabalho</a>
+      <a href="#ferramentas" class="btn btn-outline">Ver ferramentas</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-photo">
+      <!-- Para adicionar sua foto: substitua o bloco abaixo por <img src="assets/foto-perfil.jpg" alt="Idejan Gross" /> -->
+      <img src="assets/foto-perfil.jpg" alt="Idejan Gross">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── SOBRE ── -->
+<section id="sobre">
+  <div class="section-label">Sobre mim</div>
+  <h2 class="section-title">Trajetória acadêmica <em>e científica</em></h2>
+
+  <div class="sobre-grid">
+    <div class="sobre-sticky reveal">
+      <!-- Foto circular na seção Sobre -->
+      <div class="sobre-foto">
+        <!-- Substitua por: <img src="assets/foto-perfil.jpg" alt="Idejan Gross" /> -->
+        <div class="sobre-foto-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+      </div>
+
+      <p style="color:var(--muted); font-size:0.95rem; max-width:30ch; margin-top: 1.6rem;">
+        Professor de Química no Ensino Básico, Técnico e Tecnológico no Colégio de Aplicação da UFSC.
+      </p>
+
+      <!-- Card Lattes -->
+      <a href="http://lattes.cnpq.br/6140486817932007" class="pesquisa-card" target="_blank" rel="noopener" style="margin-top:2rem;">
+        <div class="pesquisa-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pesquisa-card-title">Currículo Lattes</div>
+          <div class="pesquisa-card-sub">Acesse o currículo completo na Plataforma Lattes / CNPq</div>
+        </div>
+        <svg class="pesquisa-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="pesquisa.html" class="pesquisa-card">
+        <div class="pesquisa-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pesquisa-card-title">Projetos &amp; Publicações</div>
+          <div class="pesquisa-card-sub">Acesse a lista completa de projetos de pesquisa e trabalhos publicados</div>
+        </div>
+        <svg class="pesquisa-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="reveal">
+      <div class="bio-block">
+        <h3>Formação</h3>
+        <p>
+          Bacharel em Química Tecnológica e Licenciado em Química pela UFSC (2009–2013 e 2015–2021). Mestre (2013–2015) e Doutor em Química, subárea Físico-Química, pela UFSC (2015–2019). Pós-doutorado na Universidade de Brasília (UnB, 2022–2026), atuando em projetos financiados pela FAPDF e CNPq no Laboratório de Tecnologia em Medicamentos, Alimentos e Cosméticos (LTMAC).
+        </p>
+      </div>
+      <div class="bio-block">
+        <h3>Atuação Docente</h3>
+        <p>
+          Professor EBTT em dedicação exclusiva (2026–atual). Atuou como Professor Substituto na UFSC (2019–2021), ministrando Química Geral para diversos cursos de engenharia. No PPGNano/UnB, onde ainda figura como professor convidado, ministrou as disciplinas <em>Tópicos em Físico-Química 2</em> e <em>Introdução à Nanociência e Nanobiotecnologia</em>.
+        </p>
+      </div>
+        <div class="bio-block">
+          <h3>Linhas de Pesquisa</h3>
+          <ul>
+            <li>
+              Desenvolvimento de materiais poliméricos biodegradáveis, nanopartículas funcionais e tecnologias farmacêuticas inovadoras. Pesquisador colaborador pleno no PPGNano/UnB, com projetos nas áreas de impressão 3D (FDM e BJ), extrusão a quente e formação <em>in-situ</em> de nanoestruturas farmacêuticas. Revisor de periódicos como <em>Biomacromolecules</em>, <em>ACS Applied Polymer Materials</em> e <em>Brazilian Journal of Pharmaceutical Sciences</em>.
+            </li>
+            <br />
+            <li>
+              Desenvolvimento de ferramentas digitais para o ensino de Química, com foco em recursos interativos, simulação de experimentos, tratamento de dados e uso de inteligência artificial aplicada ao ensino de ciências.
+            </li>
+          </ul>
+        </div>
+      <div class="tags">
+        <span class="tag">Físico-Química</span>
+        <span class="tag">Polímeros Biodegradáveis</span>
+        <span class="tag">Nanociência</span>
+        <span class="tag">Impressão 3D Farmacêutica</span>
+        <span class="tag">Nanopartículas</span>
+        <span class="tag">Extrusão a Quente</span>
+        <span class="tag">Tecnologia Farmacêutica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURSOS ── -->
+<section id="cursos">
+  <div class="section-label">Cursos</div>
+  <h2 class="section-title">Conteúdo <em>em desenvolvimento</em></h2>
+  <div class="divider"></div>
+  <p style="color:var(--muted); max-width:55ch; font-size:0.95rem;">
+    Os cursos estão sendo produzidos e estarão disponíveis em breve. Cadastre-se para ser avisado quando abrirem inscrições.
+  </p>
+
+  <div class="cursos-bloqueados">
+    <div class="cursos-overlay">
+      <div class="cursos-overlay-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h4>Em breve</h4>
+      <p>Os cursos estão sendo preparados e serão revelados em breve.</p>
+    </div>
+
+    <div class="cursos-grid">
+
+    <div class="curso-card reveal">
+      <div class="curso-icon">📚</div>
+      <h3>Nome do Curso 1</h3>
+      <p>Breve descrição do curso, público-alvo e o que o aluno irá aprender ao final.</p>
+      <span class="em-construcao">Em construção</span>
+    </div>
+
+    <div class="curso-card reveal">
+      <div class="curso-icon">🔬</div>
+      <h3>Nome do Curso 2</h3>
+      <p>Breve descrição do curso, público-alvo e o que o aluno irá aprender ao final.</p>
+      <span class="em-construcao">Em construção</span>
+    </div>
+
+    <div class="curso-card reveal">
+      <div class="curso-icon">🧭</div>
+      <h3>Nome do Curso 3</h3>
+      <p>Breve descrição do curso, público-alvo e o que o aluno irá aprender ao final.</p>
+      <span class="em-construcao">Em construção</span>
+    </div>
+
+    <div class="curso-card reveal" style="border-style: dashed; opacity: 0.5; cursor: default;">
+      <div class="curso-icon">＋</div>
+      <h3>Mais por vir</h3>
+      <p>Novos cursos serão adicionados. Fique de olho!</p>
+    </div>
+
+  </div><!-- /cursos-grid -->
+  </div><!-- /cursos-bloqueados -->
+</section>
+<section id="ferramentas">
+  <div class="section-label">Ferramentas</div>
+  <h2 class="section-title">Recursos para <em>ensino-aprendizagem</em></h2>
+  <div class="divider"></div>
+  <p style="color:var(--muted); max-width:55ch; font-size:0.95rem;">
+    Ferramentas interativas desenvolvidas para apoiar docentes e estudantes no processo de ensino-aprendizagem.
+  </p>
+
+  <div class="ferramentas-grid">
+
+    <a href="ferramentas/gas-solute.html" class="ferramenta-card reveal">
+      <span class="f-icon">💨</span>
+      <h4>Solubilidade de Gases</h4>
+      <p>Simulação interativa que permite explorar como temperatura e pressão influenciam a dissolução de gases em líquidos. Ajuste os parâmetros e observe em tempo real o comportamento das moléculas no frasco.</p>
+      <span class="f-status status-live">Disponível</span>
+    </a>
+
+    <a href="ferramentas/concentracao-adapt.html" class="ferramenta-card reveal">
+      <span class="f-icon">🧪</span>
+      <h4>Concentração de Soluções</h4>
+      <p>Atividade adaptada sobre concentração de soluções, desenvolvida com linguagem visual acessível e interface simplificada para estudantes da educação especial.</p>
+      <span class="f-status status-live">Disponível</span>
+    </a>
+
+    <div class="ferramenta-card reveal" style="border-style: dashed; opacity: 0.5; cursor: default; pointer-events: none;">
+      <span class="f-icon">🔭</span>
+      <h4>Mais ferramentas em breve</h4>
+      <p>Novos recursos interativos estão sendo desenvolvidos e serão adicionados em breve.</p>
+      <span class="f-status status-em-breve">Em breve</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CONTATO ── -->
+<section id="contato">
+  <div class="contato-inner reveal">
+    <div class="section-label">Contato</div>
+    <h2 class="section-title">Vamos <em>conversar?</em></h2>
+    <p>Seja para colaborações acadêmicas, convites para palestras ou dúvidas sobre as ferramentas — entre em contato.</p>
+    <a href="mailto:gross.idejan@gmail.com" class="contact-email">gross.idejan@gmail.com</a>
+    <div class="social-links">
+      <a href="http://lattes.cnpq.br/6140486817932007" class="social-link" title="Lattes CNPq" target="_blank" rel="noopener">L</a>
+      <a href="https://linkedin.com/" class="social-link" title="LinkedIn" target="_blank" rel="noopener">in</a>
+      <a href="https://github.com/" class="social-link" title="GitHub" target="_blank" rel="noopener">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span>© 2025 Idejan Gross — Todos os direitos reservados</span>
+  <a href="#">Topo ↑</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

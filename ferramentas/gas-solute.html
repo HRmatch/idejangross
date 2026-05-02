@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulação — Solubilidade de Gases × Temperatura e Pressão</title>
+
+<style>
+  :root {
+    --bg:#0f172a; --panel:#0b1220; --text:#e5e7eb; --line:#94a3b8;
+    --blue:#38bdf8; --red:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:16px;
+    background:radial-gradient(1200px 500px at 70% 0%, #111827 0%, var(--bg) 60%);
+    color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial,sans-serif;
+    min-height:100dvh; display:grid; place-items:center;
+  }
+  .wrap{width:min(1120px,100%); display:grid; gap:16px; grid-template-columns:1.15fr 1fr}
+  @media (max-width:980px){.wrap{grid-template-columns:1fr}}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px;
+    box-shadow:0 10px 35px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  h1{margin:0 0 6px; font-size:clamp(18px,2.2vw,26px); letter-spacing:.2px}
+  p.desc{margin:0 0 10px; opacity:.95; font-size:.95rem}
+  canvas{width:100%; display:block; border-radius:12px; background:rgba(255,255,255,.01)}
+  .controls{display:grid; gap:14px}
+  .row{display:grid; gap:10px; grid-template-columns:1fr auto; align-items:center}
+  input[type="range"]{width:100%}
+  .badges{display:flex; gap:8px; flex-wrap:wrap}
+  .badge{display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; background:var(--panel); border:1px solid rgba(148,163,184,.25); font-size:.9rem}
+  .dot-blue,.dot-red{width:10px; height:10px; border-radius:999px; display:inline-block}
+  .dot-blue{background:var(--blue); box-shadow:0 0 10px #38bdf8aa}
+  .dot-red{background:var(--red); box-shadow:0 0 10px #fb7185aa}
+  .kpi{display:grid; grid-template-columns:repeat(2,1fr); gap:8px}
+  .card-mini{background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:8px 10px; font-size:.92rem}
+  .btns{display:flex; gap:10px; flex-wrap:wrap}
+  button{background:var(--panel); color:var(--text); border:1px solid rgba(148,163,184,.3); padding:8px 12px; border-radius:10px; cursor:pointer}
+  button:hover{border-color:rgba(148,163,184,.6)}
+  .legend{font-size:.9rem; opacity:.9; line-height:1.45; border-top:1px dashed rgba(255,255,255,.15); padding-top:12px; margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Simulação: Gás dissolvido em líquido × Temperatura & Pressão</h1>
+
+      <p class="desc">
+        <span class="dot-blue"></span> <strong>Solvente</strong> (líquido) •
+        <span class="dot-red"></span> <strong>Gás</strong> (dissolvido/não dissolvido).<br>
+        Ajuste <strong>temperatura</strong> e <strong>pressão</strong>. Use <em>Agitar frasco</em> para injetar energia cinética (efeito cumulativo).
+      </p>
+      <canvas id="sim" width="900" height="560" aria-label="Frasco com solvente e gás dissolvido"></canvas>
+    </div>
+
+    <div class="card">
+      <div class="controls">
+        <div class="row">
+          <label for="temp">Temperatura: <strong><span id="tempLabel">20</span> °C</strong></label>
+          <input id="temp" type="range" min="0" max="60" value="20" step="1"/>
+        </div>
+
+        <div class="row">
+          <label for="press">Pressão: <strong><span id="pressLabel">1.0</span> atm</strong></label>
+          <input id="press" type="range" min="0.5" max="3.0" value="1.0" step="0.1"/>
+        </div>
+
+        <div class="badges">
+          <span class="badge"><span class="dot-blue"></span> Solvente</span>
+          <span class="badge"><span class="dot-red"></span> Gás</span>
+        </div>
+
+        <div class="kpi">
+          <div class="card-mini">Gás dissolvido: <strong><span id="dissolvedCount">0</span></strong></div>
+          <div class="card-mini">Gás não dissolvido: <strong><span id="escapedCount">0</span></strong></div>
+        </div>
+
+        <div class="btns">
+          <button id="pauseBtn">Pausar</button>
+          <button id="resetBtn">Resetar</button>
+          <button id="shakeBtn" title="Injeta energia cinética (acumulativo)">Agitar frasco</button>
+        </div>
+
+        <div class="legend">
+          <strong>Leituras qualitativas</strong><br/>
+          • <em>T↑</em> ⇒ energia cinética ↑ ⇒ <strong>fuga ↑</strong> (solubilidade de gases ↓).<br/>
+          • <em>P↑</em> ⇒ empurra moléculas para o líquido ⇒ <strong>re-dissolução ↑</strong> e fuga ↓.<br/>
+          • <em>Agitar</em> clicando repetidamente no botão, adiciona energia ao sistema: mais moléculas escapam; após alguns segundos o sistema reequilibra com pequenas flutuações.
+          </div>
+        <h1>Prof. Dr. Idejan P. Gross</h1>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('sim');
+  const ctx = canvas.getContext('2d');
+
+  // UI
+  const tempSlider = document.getElementById('temp');
+  const pressSlider = document.getElementById('press');
+  const tempLabel  = document.getElementById('tempLabel');
+  const pressLabel = document.getElementById('pressLabel');
+  const dissolvedCountEl = document.getElementById('dissolvedCount');
+  const escapedCountEl   = document.getElementById('escapedCount');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const shakeBtn = document.getElementById('shakeBtn');
+
+  // Geometria do frasco (responsiva)
+  let PADDING = 24;
+  const bottle = { x: PADDING, y: PADDING, w: 0, h: 0, neckH: 70, wall: 8, surfaceThickness: 2 };
+  let liquidTopY = 0, liquidBottomY = 0;
+
+  // População
+  const N_SOLVENT = 140, N_GAS = 40;
+  const R_SOLVENT = 4,   R_GAS = 4.5;
+
+  // Físico-químico (qualitativo)
+  let temperature = 20; // °C
+  let pressure    = 1.0; // atm
+  const T_BASE = 20, K0 = 273.15;
+
+  // Dinâmica
+  const MIN_SPEED = 0.15, MAX_SPEED = 4.2;
+  const DRAG = 0.0025;     // amortecimento por frame
+  const SURF_TOL = 1.2;    // proximidade da superfície
+  const COOLDOWN_FRAMES = 30;
+
+  // Energia de agitação (reservatório cumulativo que decai)
+  let shakeEnergy = 0;                // 0 … ~2
+  const SHAKE_GAIN_PER_CLICK = 0.35;  // incremento por clique
+  const SHAKE_DECAY = 0.985;          // decaimento ~2–4 s
+
+  // Estado
+  let running = true;
+  let particles = [];
+
+  // Util
+  const rand = (a,b)=>Math.random()*(b-a)+a;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const logistic=(x,k=10,x0=0.5)=>1/(1+Math.exp(-k*(x-x0)));
+
+  function tempToSpeedGain(Tc){
+    const Tk = Math.max(1, K0+Tc), Tref=K0+T_BASE;
+    const root = Math.sqrt(Tk/Tref);
+    const expo = Math.exp(0.008*(Tc-T_BASE)); // ganho moderado
+    return root*expo;
+  }
+
+  function pEscape(Tc, vyUp, P){
+    const t = clamp(Tc/60,0,1);
+    const baseT = logistic(t, 7, 0.38);
+    const vBoost= logistic(clamp(Math.abs(vyUp)/2.8,0,1), 6, 0.35);
+    let pT = 0.65*baseT + 0.35*vBoost;
+
+    const pressFactor = Math.pow(1/Math.max(0.5, P), 1.1); // 0.5–3 atm
+    const shakeBoost  = 1 + 0.5 * clamp(shakeEnergy/1.5, 0, 1);
+
+    const p = 0.02 + 0.9 * pT * pressFactor * shakeBoost;
+    return clamp(p, 0, 0.98);
+  }
+
+  function pRedissolve(Tc, vyDown, P){
+    const cold = 1 - clamp(Tc/60,0,1);
+    const vBoost = logistic(clamp(Math.abs(vyDown)/2.5,0,1), 6, 0.35);
+    let base = 0.08 + 0.72*(0.7*cold + 0.3*vBoost);
+
+    const pressBoost = Math.pow(Math.max(0.5, P), 0.9);
+    const shakeCut   = 1 - 0.45 * clamp(shakeEnergy/1.5, 0, 1);
+
+    const p = base * pressBoost * shakeCut;
+    return clamp(p, 0, 0.95);
+  }
+
+  function updateKeyHeights(){
+    liquidTopY = bottle.y + bottle.neckH + bottle.surfaceThickness;
+    liquidBottomY = bottle.y + bottle.h - bottle.wall;
+  }
+
+  class Particle{
+    constructor(x,y,vx,vy,r,color,type){
+      this.x=x; this.y=y; this.vx=vx; this.vy=vy; this.r=r; this.color=color;
+      this.type=type; this.escaped=false; this.cooldown=0;
+    }
+    draw(ctx){
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=this.color; ctx.shadowColor=this.color; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+    }
+    applyTemp(){
+      // Energia térmica base + energia de agitação (decrescente)
+      const fT = tempToSpeedGain(temperature);
+      const energyBoost = 1 + 0.8 * clamp(shakeEnergy, 0, 2);
+      const f = fT * energyBoost;
+
+      const v = Math.hypot(this.vx,this.vy)||1;
+      const base = (this.type==='gas')?1.25:1.0;
+      let target = clamp(base*f, MIN_SPEED, MAX_SPEED);
+
+      // arrasto leve
+      this.vx = (this.vx / v) * target * (1-DRAG);
+      this.vy = (this.vy / v) * target * (1-DRAG);
+
+      // decaimento da agitação (global)
+      if (this === particles[0]) shakeEnergy *= SHAKE_DECAY;
+
+      if(this.cooldown>0) this.cooldown--;
+    }
+    update(){
+      this.x += this.vx; this.y += this.vy;
+
+      const left  = bottle.x + bottle.wall + this.r;
+      const right = bottle.x + bottle.w - bottle.wall - this.r;
+      if(this.x<left){this.x=left; this.vx*=-1}
+      if(this.x>right){this.x=right; this.vx*=-1}
+
+      const bottom = liquidBottomY - this.r;
+      const topHead = bottle.y + bottle.wall + this.r;
+
+      if(this.type==='gas'){
+        if(!this.escaped){
+          if(this.y>bottom){this.y=bottom; this.vy*=-1}
+          // viés ascendente suave com agitação
+          if (shakeEnergy > 0.05) this.vy -= 0.02 * shakeEnergy;
+
+          const surfaceY = liquidTopY + this.r + SURF_TOL;
+          if(this.y < surfaceY){
+            if(this.vy < 0 && this.cooldown===0){
+              if(Math.random() < pEscape(temperature, this.vy, pressure)){
+                this.escaped = true;
+                this.cooldown = COOLDOWN_FRAMES;
+                this.y = liquidTopY - this.r - 0.5;
+                this.vy = -Math.abs(this.vy) * (1.15 + 0.7*(temperature/60));
+              } else {
+                this.y = surfaceY; this.vy *= -1;
+              }
+            } else {
+              this.y = surfaceY;
+            }
+          }
+        } else {
+          const headBottom = liquidTopY - this.r - SURF_TOL;
+          if(this.y < topHead){this.y=topHead; this.vy*=-1}
+          if(this.y > headBottom){
+            if(this.vy > 0 && this.cooldown===0 && Math.random() < pRedissolve(temperature, this.vy, pressure)){
+              this.escaped=false;
+              this.cooldown = COOLDOWN_FRAMES;
+              this.y = liquidTopY + this.r + 0.5;
+              this.vy = Math.abs(this.vy) * (1.05 + 0.3*(1 - temperature/60));
+            } else {
+              this.y = headBottom; this.vy *= -1;
+            }
+          }
+        }
+      } else {
+        const top = liquidTopY + this.r + SURF_TOL;
+        if(this.y<top){this.y=top; this.vy*=-1}
+        if(this.y>bottom){this.y=bottom; this.vy*=-1}
+      }
+    }
+  }
+
+  function createSystem(){
+    particles = [];
+    // solvente
+    for(let i=0;i<N_SOLVENT;i++){
+      const x=rand(bottle.x+bottle.wall+R_SOLVENT, bottle.x+bottle.w-bottle.wall-R_SOLVENT);
+      const y=rand(liquidTopY+R_SOLVENT, liquidBottomY-R_SOLVENT);
+      const a=Math.random()*Math.PI*2, v=rand(0.6,1.2);
+      particles.push(new Particle(x,y,Math.cos(a)*v,Math.sin(a)*v,R_SOLVENT,'#38bdf8','solvent'));
+    }
+    // gás (começa dissolvido)
+    for(let i=0;i<N_GAS;i++){
+      const x=rand(bottle.x+bottle.wall+R_GAS, bottle.x+bottle.w-bottle.wall-R_GAS);
+      const y=rand(liquidTopY+12, liquidBottomY-12);
+      const a=Math.random()*Math.PI*2, v=rand(0.9,1.6);
+      particles.push(new Particle(x,y,Math.cos(a)*v,Math.sin(a)*v,R_GAS,'#fb7185','gas'));
+    }
+    updateLabels();
+  }
+
+  function drawBottle(){
+    ctx.lineWidth = bottle.wall;
+    ctx.strokeStyle = 'rgba(255,255,255,.18)';
+    ctx.strokeRect(bottle.x+bottle.wall/2, bottle.y+bottle.wall/2, bottle.w-bottle.wall, bottle.h-bottle.wall);
+
+    ctx.lineWidth = 2; ctx.strokeStyle='var(--line)';
+    ctx.beginPath(); ctx.moveTo(bottle.x+bottle.wall, liquidTopY); ctx.lineTo(bottle.x+bottle.w-bottle.wall, liquidTopY); ctx.stroke();
+
+    ctx.fillStyle='rgba(56,189,248,.08)';
+    ctx.fillRect(bottle.x+bottle.wall, liquidTopY, bottle.w-2*bottle.wall, (liquidBottomY-liquidTopY));
+
+    ctx.font='12px system-ui, sans-serif'; ctx.fillStyle='rgba(255,255,255,.85)';
+    ctx.fillText('Fase gasosa acima da superfície', bottle.x+14, bottle.y+20);
+    ctx.fillText('Solução (solvente + gás dissolvido)', bottle.x+14, liquidTopY+18);
+  }
+
+  function drawBackground(){
+    const g=ctx.createLinearGradient(0,0,0,canvas.height);
+    g.addColorStop(0,'rgba(255,255,255,.03)'); g.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
+  }
+
+  function updateLabels(){
+    tempLabel.textContent=Math.round(temperature);
+    pressLabel.textContent=pressure.toFixed(1);
+  }
+
+  function loop(){
+    if(running){
+      for(const p of particles) p.applyTemp();
+      for(const p of particles) p.update();
+    }
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawBackground(); drawBottle();
+    for(const p of particles) p.draw(ctx);
+
+    // KPIs
+    let gasDiss=0, gasEsc=0;
+    for(const p of particles) if(p.type==='gas'){ if(p.escaped) gasEsc++; else gasDiss++; }
+    dissolvedCountEl.textContent=gasDiss;
+    escapedCountEl.textContent=gasEsc;
+
+    requestAnimationFrame(loop);
+  }
+
+  // Responsividade
+  function adjustForDPR(){
+    const dpr=Math.min(2, window.devicePixelRatio||1);
+    const rect=canvas.getBoundingClientRect();
+    const cssW=rect.width, cssH=Math.max(420, Math.min(720, cssW*0.58));
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr); canvas.style.height=cssH+'px';
+
+    const inset=Math.max(24, Math.round((canvas.width/dpr)*0.04)); PADDING=inset;
+    bottle.x=PADDING; bottle.y=PADDING;
+    bottle.w=Math.round((canvas.width/dpr)-PADDING*2);
+    bottle.h=Math.round((canvas.height/dpr)-PADDING*2);
+    bottle.neckH=Math.max(60, Math.round(bottle.h*0.33));
+    bottle.wall=Math.max(6, Math.min(10, Math.round(bottle.w * 0.008)));
+    liquidTopY = bottle.y + bottle.neckH + bottle.surfaceThickness;
+    liquidBottomY = bottle.y + bottle.h - bottle.wall;
+  }
+
+  // Controles
+  tempSlider.addEventListener('input', e => { temperature=parseFloat(e.target.value); updateLabels(); });
+  pressSlider.addEventListener('input', e => { pressure=parseFloat(e.target.value);   updateLabels(); });
+
+  pauseBtn.addEventListener('click', ()=>{ running=!running; pauseBtn.textContent=running?'Pausar':'Retomar'; });
+
+  // RESET total: animação + sliders + labels + energia
+  resetBtn.addEventListener('click', ()=>{
+    // valores padrão
+    temperature = 20;
+    pressure = 1.0;
+    shakeEnergy = 0;
+
+    // atualiza UI
+    tempSlider.value  = String(temperature);
+    pressSlider.value = String(pressure.toFixed(1));
+    updateLabels();
+
+    // recria partículas
+    createSystem();
+  });
+
+  shakeBtn.addEventListener('click', ()=>{
+    // injeta energia cumulativa
+    shakeEnergy = clamp(shakeEnergy + SHAKE_GAIN_PER_CLICK, 0, 2);
+    // “kick” aleatório + viés ascendente nas partículas de gás dissolvido
+    for(const p of particles){
+      if(p.type==='gas' && !p.escaped){
+        p.vx += rand(-0.6,0.6)* (0.5 + shakeEnergy);
+        p.vy += rand(-0.6,0.2)* (0.5 + shakeEnergy); // tendência para cima (negativo)
+      } else if (p.type==='solvent'){
+        p.vx += rand(-0.4,0.4)*0.6;
+        p.vy += rand(-0.4,0.4)*0.6;
+      }
+    }
+  });
+
+  // Init + resize
+  function init(){ adjustForDPR(); createSystem(); loop(); }
+  let ro;
+  if('ResizeObserver' in window){
+    ro=new ResizeObserver(()=>{ const was=running; running=false; adjustForDPR(); createSystem(); running=was; });
+    ro.observe(canvas);
+  } else {
+    window.addEventListener('resize', ()=>{ const was=running; running=false; adjustForDPR(); createSystem(); running=was; });
+  }
+  setTimeout(init,0);
+})();
+</script>
+</body>
+</html>

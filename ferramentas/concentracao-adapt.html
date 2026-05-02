@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONCENTRAÇÃO DE UMA SOLUÇÃO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #e8f4ff;
+      --card: #ffffff;
+      --blue-dark: #0a4fa0;
+      --blue-mid: #2680d9;
+      --blue-light: #a8d8f8;
+      --orange: #ff6b35;
+      --orange-light: #ffe0d5;
+      --yellow: #ffd166;
+      --green: #06d6a0;
+      --shadow: 0 10px 28px rgba(10,79,160,0.13);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(38,128,217,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 80%, rgba(255,107,53,0.09) 0%, transparent 50%);
+      min-height: 100vh;
+      color: #0a2540;
+      text-transform: uppercase;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px 32px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: var(--blue-dark);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      border-radius: 100px;
+      padding: 5px 16px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(1.3rem, 4vw, 2.2rem);
+      font-weight: 900;
+      color: var(--blue-dark);
+      line-height: 1.15;
+    }
+
+    h1 span {
+      color: var(--orange);
+    }
+
+    /* ── SIMULATION ── */
+    .sim-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .bottle-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px 16px 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .conc-badge {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      background: var(--blue-light);
+      border-radius: 100px;
+      padding: 6px 18px;
+      margin-bottom: 14px;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* SVG Bottle */
+    .bottle-svg-wrap {
+      position: relative;
+      width: 170px;
+      height: 290px;
+      margin-bottom: 14px;
+    }
+
+    #bottleSvg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      background: #f0f7ff;
+      border-radius: 100px;
+      padding: 8px 16px;
+    }
+
+    .dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-blue { background: #5bc8f5; border: 2.5px solid #2ab0e8; }
+    .dot-orange { background: var(--orange); border: 2.5px solid #d94f1a; }
+
+    /* ── CONTROLS ── */
+    .control-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .meter-wrap {
+      text-align: center;
+    }
+
+    .meter-label {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #6b8cae;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .meter-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .meter-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #dde9f5;
+      border: 3px solid #b8d0e8;
+      transition: background 0.35s, border-color 0.35s, transform 0.35s;
+    }
+
+    .meter-dot.active {
+      background: var(--orange);
+      border-color: #d94f1a;
+      transform: scale(1.18);
+    }
+
+    .emoji-display {
+      font-size: 2rem;
+      text-align: center;
+      line-height: 1;
+      margin: 2px 0;
+    }
+
+    .conc-word {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      min-height: 2.2em;
+      line-height: 1.2;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: transform 0.1s, box-shadow 0.1s;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    }
+
+    .btn-add {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .btn-add:disabled {
+      background: #c8d8e8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-reset {
+      background: var(--blue-dark);
+      color: #fff;
+    }
+
+    /* ── QUESTION ── */
+    .question-card {
+      margin-top: 16px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .q-label {
+      display: inline-block;
+      background: var(--yellow);
+      color: #0a2540;
+      font-size: 0.8rem;
+      font-weight: 900;
+      border-radius: 100px;
+      padding: 5px 18px;
+      margin-bottom: 14px;
+      letter-spacing: 0.1em;
+    }
+
+    .q-text {
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      font-weight: 900;
+      color: var(--blue-dark);
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      background: #f0f7ff;
+      border: 3px solid var(--blue-light);
+      border-radius: 18px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      font-family: 'Nunito', sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    }
+
+    .option:hover {
+      border-color: var(--blue-mid);
+      background: #e0f0ff;
+    }
+
+    .option:active { transform: translateY(3px); box-shadow: none; }
+
+    .option.correct-chosen {
+      background: #d6fff2;
+      border-color: var(--green);
+      color: #064a38;
+    }
+
+    .option.wrong-chosen {
+      background: #ffe8e3;
+      border-color: var(--orange);
+    }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      display: none;
+      line-height: 1.4;
+    }
+
+    .feedback.correct {
+      display: block;
+      background: #d6fff2;
+      border: 3px solid var(--green);
+      color: #064a38;
+    }
+
+    .feedback.wrong {
+      display: block;
+      background: #ffe8e3;
+      border: 3px solid var(--orange);
+    }
+
+    /* ── PARTICLE ANIMATIONS ── */
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-7px) rotate(4deg); }
+      66% { transform: translateY(4px) rotate(-3deg); }
+    }
+
+    @keyframes floatB {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      40% { transform: translateY(8px) rotate(-5deg); }
+      70% { transform: translateY(-5px) rotate(3deg); }
+    }
+
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-9px); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+      70% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes bubbleRise {
+      0% { transform: translateY(0) scale(1); opacity: 0.9; }
+      100% { transform: translateY(-120px) scale(0.6); opacity: 0; }
+    }
+
+    .particle-solvent {
+      animation: floatA var(--dur, 3.2s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .particle-solute {
+      animation: floatB var(--dur, 2.8s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .particle-new {
+      animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .bubble {
+      animation: bubbleRise 1.4s ease-out forwards;
+    }
+
+    @media (max-width: 480px) {
+      main { padding: 14px 12px 28px; }
+      .sim-wrapper {
+        grid-template-columns: 1fr 160px;
+        gap: 10px;
+      }
+      .bottle-svg-wrap {
+        width: 130px;
+        height: 225px;
+      }
+      .bottle-card { padding: 12px 10px 12px; }
+      .control-card { padding: 14px 12px; gap: 10px; }
+      .conc-badge { font-size: 0.78rem; padding: 5px 12px; margin-bottom: 10px; }
+      .legend-item { font-size: 0.78rem; padding: 6px 10px; }
+      .dot { width: 14px; height: 14px; }
+      .meter-dot { width: 22px; height: 22px; }
+      .emoji-display { font-size: 1.6rem; }
+      .conc-word { font-size: 0.82rem; }
+      .btn { padding: 11px 8px; font-size: 0.82rem; border-radius: 14px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-badge">⚗️ QUÍMICA</div>
+    <h1>CONCENTRAÇÃO<br><span>DE UMA SOLUÇÃO</span></h1>
+  </header>
+
+  <!-- SIMULATION -->
+  <section class="sim-wrapper">
+
+    <!-- Bottle -->
+    <div class="bottle-card">
+      <div class="conc-badge" id="concBadge">POUCO CONCENTRADA</div>
+
+      <div class="bottle-svg-wrap">
+        <svg id="bottleSvg" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="bottleClip">
+              <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"/>
+            </clipPath>
+            <linearGradient id="liquidGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#b8e8ff"/>
+              <stop offset="100%" stop-color="#d8f4ff"/>
+            </linearGradient>
+            <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Liquid fill -->
+          <rect x="18" y="100" width="164" height="230" rx="0" fill="url(#liquidGrad)" clip-path="url(#bottleClip)"/>
+
+          <!-- Particles group (clipped inside bottle) -->
+          <g clip-path="url(#bottleClip)" id="particlesGroup"></g>
+
+          <!-- Bottle outline -->
+          <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"
+                fill="none" stroke="#5aafd4" stroke-width="5" stroke-linejoin="round"/>
+
+          <!-- Neck top cap -->
+          <rect x="66" y="0" width="68" height="12" rx="6" fill="#5aafd4"/>
+
+          <!-- Glass shine overlay -->
+          <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"
+                fill="url(#glassGrad)" clip-path="url(#bottleClip)"/>
+
+          <!-- Shine streak -->
+          <line x1="35" y1="130" x2="35" y2="300" stroke="rgba(255,255,255,0.5)" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- Legend -->
+      <div class="legend">
+        <div class="legend-item"><span class="dot dot-blue"></span>SOLVENTE</div>
+        <div class="legend-item"><span class="dot dot-orange"></span>SOLUTO</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="control-card">
+
+      <div class="meter-wrap">
+        <div class="meter-label">NÍVEL</div>
+        <div class="meter-dots" id="meterDots">
+          <div class="meter-dot active"></div>
+          <div class="meter-dot"></div>
+          <div class="meter-dot"></div>
+          <div class="meter-dot"></div>
+          <div class="meter-dot"></div>
+        </div>
+      </div>
+
+      <div class="emoji-display" id="emoji">😐</div>
+      <div class="conc-word" id="concWord">POUCO CONCENTRADA</div>
+
+      <button class="btn btn-add" id="addBtn">➕ ADICIONAR SOLUTO</button>
+      <button class="btn btn-reset" id="resetBtn">🔄 RECOMEÇAR</button>
+
+    </div>
+  </section>
+
+  <!-- QUESTION -->
+  <section class="question-card">
+    <div class="q-label">❓ PERGUNTA</div>
+    <p class="q-text">O QUE ACONTECE QUANDO ADICIONAMOS MAIS SOLUTO NO MESMO FRASCO?</p>
+
+    <div class="options">
+      <button class="option" data-answer="wrong">A SOLUÇÃO FICA MENOS CONCENTRADA</button>
+      <button class="option" data-answer="correct">A SOLUÇÃO FICA MAIS CONCENTRADA</button>
+      <button class="option" data-answer="wrong">O SOLUTO DESAPARECE</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+  </section>
+
+</main>
+
+<script>
+  // ── State ──
+  let level = 1;
+  const MAX = 5;
+
+  // Solvent: fixed positions [cx, cy]
+  const solvents = [
+    [50,155],[100,145],[150,155],[175,185],
+    [30,195],[80,210],[130,200],[170,220],
+    [50,250],[105,265],[158,250],[180,275],
+    [68,300],[120,310],[162,300]
+  ];
+
+  // Solute positions per level (cumulative)
+  const solutes = {
+    1: [[100,230],[148,175]],
+    2: [[100,230],[148,175],[55,185],[135,125]],
+    3: [[100,230],[148,175],[55,185],[135,125],[178,245],[75,110]],
+    4: [[100,230],[148,175],[55,185],[135,125],[178,245],[75,110],[40,260],[165,90]],
+    5: [[100,230],[148,175],[55,185],[135,125],[178,245],[75,110],[40,260],[165,90],[35,125],[142,270],[185,165]]
+  };
+
+  const floatAnims = ['floatA','floatB','floatC'];
+
+  const states = {
+    1: { badge:'POUCO CONCENTRADA', word:'POUCO CONCENTRADA', emoji:'😐' },
+    2: { badge:'UM POUCO MAIS',     word:'CONCENTRAÇÃO BAIXA', emoji:'🙂' },
+    3: { badge:'CONCENTRADA',       word:'MAIS CONCENTRADA',   emoji:'😮' },
+    4: { badge:'MUITO CONCENTRADA', word:'BEM CONCENTRADA',    emoji:'😲' },
+    5: { badge:'MÁXIMA',            word:'MUITO CONCENTRADA!', emoji:'🤩' }
+  };
+
+  // ── Elements ──
+  const group       = document.getElementById('particlesGroup');
+  const concBadge   = document.getElementById('concBadge');
+  const concWord    = document.getElementById('concWord');
+  const emoji       = document.getElementById('emoji');
+  const addBtn      = document.getElementById('addBtn');
+  const resetBtn    = document.getElementById('resetBtn');
+  const meterDots   = document.getElementById('meterDots').children;
+  const feedback    = document.getElementById('feedback');
+
+  // ── Particle helpers ──
+  function makeSVGCircle(cx, cy, r, fill, stroke, animClass, dur, delay, isNew) {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', cx);
+    c.setAttribute('cy', cy);
+    c.setAttribute('r', r);
+    c.setAttribute('fill', fill);
+    c.setAttribute('stroke', stroke);
+    c.setAttribute('stroke-width', '2.5');
+    c.style.setProperty('--dur', dur + 's');
+    c.style.setProperty('--delay', delay + 's');
+    c.classList.add(animClass);
+    if (isNew) c.classList.add('particle-new');
+    return c;
+  }
+
+  function spawnBubble(cx, cy) {
+    const b = makeSVGCircle(cx, cy, 6, 'rgba(255,255,255,0.6)', 'rgba(200,240,255,0.8)', 'bubble', 1.4, 0, false);
+    group.appendChild(b);
+    b.addEventListener('animationend', () => b.remove());
+  }
+
+  // ── Render ──
+  function renderBottle(animate) {
+    group.innerHTML = '';
+
+    // Solvents
+    solvents.forEach(([cx,cy], i) => {
+      const dur = 3 + (i % 4) * 0.4;
+      const delay = -(i * 0.45) % dur;
+      const anim = 'particle-solvent';
+      const c = makeSVGCircle(cx, cy, 11, '#74d4f5', '#2ab0e8', anim, dur, delay, false);
+      group.appendChild(c);
+    });
+
+    // Solutes
+    const prev = solutes[level - 1] || [];
+    solutes[level].forEach(([cx,cy], i) => {
+      const dur = 2.6 + (i % 3) * 0.45;
+      const delay = -(i * 0.55) % dur;
+      const isNew = animate && i >= prev.length;
+      const c = makeSVGCircle(cx, cy, 12, '#ff6b35', '#c94010', 'particle-solute', dur, delay, isNew);
+      group.appendChild(c);
+
+      if (isNew) {
+        // spawn a rising bubble nearby
+        setTimeout(() => spawnBubble(cx + (Math.random()-0.5)*20, cy - 10), 80 + i*60);
+      }
+    });
+  }
+
+  function updateUI() {
+    const s = states[level];
+    concBadge.textContent = s.badge;
+    concWord.textContent  = s.word;
+    emoji.textContent     = s.emoji;
+
+    Array.from(meterDots).forEach((d, i) => {
+      d.classList.toggle('active', i < level);
+    });
+
+    addBtn.disabled = level >= MAX;
+  }
+
+  function render(animate = false) {
+    renderBottle(animate);
+    updateUI();
+  }
+
+  // ── Events ──
+  addBtn.addEventListener('click', () => {
+    if (level < MAX) { level++; render(true); }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    level = 1;
+    feedback.className = 'feedback';
+    feedback.textContent = '';
+    document.querySelectorAll('.option').forEach(o => {
+      o.classList.remove('correct-chosen','wrong-chosen');
+      o.disabled = false;
+    });
+    render(false);
+  });
+
+  document.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ok = btn.dataset.answer === 'correct';
+      document.querySelectorAll('.option').forEach(o => o.disabled = true);
+      btn.classList.add(ok ? 'correct-chosen' : 'wrong-chosen');
+      feedback.className = 'feedback ' + (ok ? 'correct' : 'wrong');
+      feedback.textContent = ok
+        ? '✅ MUITO BEM! MAIS SOLUTO = MAIOR CONCENTRAÇÃO.'
+        : '❌ TENTE DE NOVO. OBSERVE AS BOLINHAS LARANJAS!';
+    });
+  });
+
+  // ── Init ──
+  render(false);
+</script>
+</body>
+</html>
