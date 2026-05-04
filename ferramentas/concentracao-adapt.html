@@ -33,17 +33,10 @@
       text-transform: uppercase;
     }
 
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px 16px 32px;
-    }
+    main { max-width: 900px; margin: 0 auto; padding: 20px 16px 40px; }
 
     /* ── HEADER ── */
-    header {
-      text-align: center;
-      margin-bottom: 16px;
-    }
+    header { text-align: center; margin-bottom: 16px; }
 
     .header-badge {
       display: inline-block;
@@ -64,9 +57,44 @@
       line-height: 1.15;
     }
 
-    h1 span {
-      color: var(--orange);
+    h1 span { color: var(--orange); }
+
+    /* ── NOME DO ALUNO ── */
+    .nome-wrap {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
+
+    .nome-wrap label {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nome-wrap input {
+      flex: 1;
+      border: 3px solid var(--blue-light);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-weight: 900;
+      font-family: 'Nunito', sans-serif;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      background: #f0f7ff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .nome-wrap input:focus { border-color: var(--blue-mid); }
 
     /* ── SIMULATION ── */
     .sim-wrapper {
@@ -97,47 +125,18 @@
       transition: background 0.4s, color 0.4s;
     }
 
-    /* SVG Bottle */
-    .bottle-svg-wrap {
-      position: relative;
-      width: 170px;
-      height: 290px;
-      margin-bottom: 14px;
-    }
+    .bottle-svg-wrap { position: relative; width: 170px; height: 290px; margin-bottom: 14px; }
+    #bottleSvg { width: 100%; height: 100%; overflow: visible; }
 
-    #bottleSvg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Legend */
-    .legend {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
+    .legend { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
-      font-weight: 900;
-      background: #f0f7ff;
-      border-radius: 100px;
-      padding: 8px 16px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.95rem; font-weight: 900;
+      background: #f0f7ff; border-radius: 100px; padding: 8px 16px;
     }
 
-    .dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .dot-blue { background: #5bc8f5; border: 2.5px solid #2ab0e8; }
+    .dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; }
+    .dot-blue   { background: #5bc8f5; border: 2.5px solid #2ab0e8; }
     .dot-orange { background: var(--orange); border: 2.5px solid #d94f1a; }
 
     /* ── CONTROLS ── */
@@ -151,100 +150,108 @@
       gap: 12px;
     }
 
-    .meter-wrap {
-      text-align: center;
-    }
-
-    .meter-label {
-      font-size: 0.85rem;
-      font-weight: 900;
-      color: #6b8cae;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-    }
-
-    .meter-dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
+    .meter-wrap { text-align: center; }
+    .meter-label { font-size: 0.85rem; font-weight: 900; color: #6b8cae; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .meter-dots { display: flex; justify-content: center; gap: 10px; }
 
     .meter-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #dde9f5;
-      border: 3px solid #b8d0e8;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #dde9f5; border: 3px solid #b8d0e8;
       transition: background 0.35s, border-color 0.35s, transform 0.35s;
     }
+    .meter-dot.active { background: var(--orange); border-color: #d94f1a; transform: scale(1.18); }
 
-    .meter-dot.active {
-      background: var(--orange);
-      border-color: #d94f1a;
-      transform: scale(1.18);
-    }
+    .emoji-display { font-size: 2rem; text-align: center; line-height: 1; margin: 2px 0; }
+    .conc-word { text-align: center; font-size: 0.95rem; font-weight: 900; color: var(--blue-dark); min-height: 2.2em; line-height: 1.2; }
 
-    .emoji-display {
-      font-size: 2rem;
-      text-align: center;
-      line-height: 1;
-      margin: 2px 0;
-    }
-
-    .conc-word {
-      text-align: center;
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: var(--blue-dark);
-      min-height: 2.2em;
-      line-height: 1.2;
-    }
-
-    /* Buttons */
     .btn {
-      width: 100%;
-      border: none;
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 0.95rem;
-      font-weight: 900;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      text-transform: uppercase;
+      width: 100%; border: none; border-radius: 16px; padding: 14px;
+      font-size: 0.95rem; font-weight: 900; cursor: pointer;
+      font-family: 'Nunito', sans-serif; text-transform: uppercase;
       letter-spacing: 0.04em;
       transition: transform 0.1s, box-shadow 0.1s;
       box-shadow: 0 5px 0 rgba(0,0,0,0.15);
     }
+    .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
+    .btn-add    { background: var(--orange); color: #fff; }
+    .btn-add:disabled { background: #c8d8e8; box-shadow: none; cursor: not-allowed; }
+    .btn-reset  { background: var(--blue-dark); color: #fff; }
 
-    .btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    /* ── SHARK MASCOT ── */
+    .shark-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin: 22px 0 6px;
     }
 
-    .btn-add {
-      background: var(--orange);
-      color: #fff;
+    .shark-emoji {
+      font-size: 5rem;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 8px rgba(10,79,160,0.15));
+      animation: sharkBob 2.6s ease-in-out infinite;
+      transform-origin: center bottom;
     }
 
-    .btn-add:disabled {
-      background: #c8d8e8;
-      box-shadow: none;
-      cursor: not-allowed;
+    .speech-bubble {
+      position: relative;
+      background: var(--card);
+      border: 3px solid var(--blue-light);
+      border-radius: 20px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      line-height: 1.5;
+      flex: 1;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
     }
 
-    .btn-reset {
-      background: var(--blue-dark);
-      color: #fff;
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      left: -18px; bottom: 22px;
+      border: 9px solid transparent;
+      border-right-color: var(--blue-light);
     }
 
-    /* ── QUESTION ── */
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      left: -12px; bottom: 24px;
+      border: 7px solid transparent;
+      border-right-color: var(--card);
+    }
+
+    /* ── PROGRESS DOTS ── */
+    .progress-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 16px 0 6px;
+      align-items: center;
+    }
+
+    .prog-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #dde9f5; border: 3px solid #b8d0e8;
+      transition: all 0.3s;
+    }
+    .prog-dot.done    { background: var(--green);  border-color: #04b083; }
+    .prog-dot.current { background: var(--yellow); border-color: #e6b800; transform: scale(1.25); }
+
+    /* ── QUESTIONS ── */
     .question-card {
-      margin-top: 16px;
       background: var(--card);
       border-radius: var(--radius);
       padding: 22px 20px;
       box-shadow: var(--shadow);
+      display: none;
+      margin-top: 10px;
     }
+    .question-card.active { display: block; }
 
     .q-label {
       display: inline-block;
@@ -266,10 +273,7 @@
       margin-bottom: 20px;
     }
 
-    .options {
-      display: grid;
-      gap: 12px;
-    }
+    .options { display: grid; gap: 12px; }
 
     .option {
       background: #f0f7ff;
@@ -285,24 +289,10 @@
       transition: border-color 0.2s, background 0.2s, transform 0.1s;
       box-shadow: 0 4px 0 rgba(0,0,0,0.08);
     }
-
-    .option:hover {
-      border-color: var(--blue-mid);
-      background: #e0f0ff;
-    }
-
+    .option:hover { border-color: var(--blue-mid); background: #e0f0ff; }
     .option:active { transform: translateY(3px); box-shadow: none; }
-
-    .option.correct-chosen {
-      background: #d6fff2;
-      border-color: var(--green);
-      color: #064a38;
-    }
-
-    .option.wrong-chosen {
-      background: #ffe8e3;
-      border-color: var(--orange);
-    }
+    .option.correct-chosen { background: #d6fff2; border-color: var(--green); color: #064a38; }
+    .option.wrong-chosen   { background: #ffe8e3; border-color: var(--orange); }
 
     .feedback {
       margin-top: 18px;
@@ -313,77 +303,87 @@
       display: none;
       line-height: 1.4;
     }
+    .feedback.correct { display: block; background: #d6fff2; border: 3px solid var(--green); color: #064a38; }
+    .feedback.wrong   { display: block; background: #ffe8e3; border: 3px solid var(--orange); }
 
-    .feedback.correct {
-      display: block;
-      background: #d6fff2;
-      border: 3px solid var(--green);
-      color: #064a38;
+    /* ── DOWNLOAD ── */
+    .download-wrap {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .download-wrap.visible { display: flex; }
+
+    .download-wrap p {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      line-height: 1.5;
     }
 
-    .feedback.wrong {
-      display: block;
-      background: #ffe8e3;
-      border: 3px solid var(--orange);
+    .btn-download {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 18px 40px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      font-family: 'Nunito', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+      transition: transform 0.1s, box-shadow 0.1s;
     }
+    .btn-download:active { transform: translateY(5px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
 
-    /* ── PARTICLE ANIMATIONS ── */
+    /* ── ANIMATIONS ── */
     @keyframes floatA {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-7px) rotate(4deg); }
-      66% { transform: translateY(4px) rotate(-3deg); }
+      33%  { transform: translateY(-7px) rotate(4deg); }
+      66%  { transform: translateY(4px) rotate(-3deg); }
     }
-
     @keyframes floatB {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       40% { transform: translateY(8px) rotate(-5deg); }
       70% { transform: translateY(-5px) rotate(3deg); }
     }
-
     @keyframes floatC {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-9px); }
     }
-
     @keyframes popIn {
-      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-      70% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+      0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+      70%  { transform: scale(1.2) rotate(5deg); opacity: 1; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-
     @keyframes bubbleRise {
-      0% { transform: translateY(0) scale(1); opacity: 0.9; }
+      0%   { transform: translateY(0) scale(1); opacity: 0.9; }
       100% { transform: translateY(-120px) scale(0.6); opacity: 0; }
     }
-
-    .particle-solvent {
-      animation: floatA var(--dur, 3.2s) ease-in-out infinite;
-      animation-delay: var(--delay, 0s);
+    @keyframes sharkBob {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50%  { transform: translateY(-9px) rotate(2deg); }
     }
 
-    .particle-solute {
-      animation: floatB var(--dur, 2.8s) ease-in-out infinite;
-      animation-delay: var(--delay, 0s);
-    }
-
-    .particle-new {
-      animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    .bubble {
-      animation: bubbleRise 1.4s ease-out forwards;
-    }
+    .particle-solvent { animation: floatA var(--dur, 3.2s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+    .particle-solute  { animation: floatB var(--dur, 2.8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+    .particle-new     { animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .bubble           { animation: bubbleRise 1.4s ease-out forwards; }
+    .shark-anim       { animation: sharkBob 2.6s ease-in-out infinite; transform-origin: center bottom; }
 
     @media (max-width: 480px) {
       main { padding: 14px 12px 28px; }
-      .sim-wrapper {
-        grid-template-columns: 1fr 160px;
-        gap: 10px;
-      }
-      .bottle-svg-wrap {
-        width: 130px;
-        height: 225px;
-      }
+      .sim-wrapper { grid-template-columns: 1fr 160px; gap: 10px; }
+      .bottle-svg-wrap { width: 130px; height: 225px; }
       .bottle-card { padding: 12px 10px 12px; }
       .control-card { padding: 14px 12px; gap: 10px; }
       .conc-badge { font-size: 0.78rem; padding: 5px 12px; margin-bottom: 10px; }
@@ -393,6 +393,8 @@
       .emoji-display { font-size: 1.6rem; }
       .conc-word { font-size: 0.82rem; }
       .btn { padding: 11px 8px; font-size: 0.82rem; border-radius: 14px; }
+      .shark-emoji { font-size: 3.5rem; }
+      .nome-wrap { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
 </head>
@@ -405,13 +407,16 @@
     <h1>CONCENTRAÇÃO<br><span>DE UMA SOLUÇÃO</span></h1>
   </header>
 
+  <!-- NOME -->
+  <div class="nome-wrap">
+    <label for="nomeAluno">👤 MEU NOME:</label>
+    <input type="text" id="nomeAluno" placeholder="ESCREVA SEU NOME AQUI..." maxlength="60" />
+  </div>
+
   <!-- SIMULATION -->
   <section class="sim-wrapper">
-
-    <!-- Bottle -->
     <div class="bottle-card">
       <div class="conc-badge" id="concBadge">POUCO CONCENTRADA</div>
-
       <div class="bottle-svg-wrap">
         <svg id="bottleSvg" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -419,47 +424,31 @@
               <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"/>
             </clipPath>
             <linearGradient id="liquidGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#b8e8ff"/>
+              <stop offset="0%"   stop-color="#b8e8ff"/>
               <stop offset="100%" stop-color="#d8f4ff"/>
             </linearGradient>
             <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+              <stop offset="0%"   stop-color="rgba(255,255,255,0.55)"/>
               <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
             </linearGradient>
           </defs>
-
-          <!-- Liquid fill -->
           <rect x="18" y="100" width="164" height="230" rx="0" fill="url(#liquidGrad)" clip-path="url(#bottleClip)"/>
-
-          <!-- Particles group (clipped inside bottle) -->
           <g clip-path="url(#bottleClip)" id="particlesGroup"></g>
-
-          <!-- Bottle outline -->
           <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"
                 fill="none" stroke="#5aafd4" stroke-width="5" stroke-linejoin="round"/>
-
-          <!-- Neck top cap -->
           <rect x="66" y="0" width="68" height="12" rx="6" fill="#5aafd4"/>
-
-          <!-- Glass shine overlay -->
           <path d="M70,0 L70,55 Q30,75 18,120 L18,310 Q18,330 40,330 L160,330 Q182,330 182,310 L182,120 Q170,75 130,55 L130,0 Z"
                 fill="url(#glassGrad)" clip-path="url(#bottleClip)"/>
-
-          <!-- Shine streak -->
           <line x1="35" y1="130" x2="35" y2="300" stroke="rgba(255,255,255,0.5)" stroke-width="6" stroke-linecap="round"/>
         </svg>
       </div>
-
-      <!-- Legend -->
       <div class="legend">
         <div class="legend-item"><span class="dot dot-blue"></span>SOLVENTE</div>
         <div class="legend-item"><span class="dot dot-orange"></span>SOLUTO</div>
       </div>
     </div>
 
-    <!-- Controls -->
     <div class="control-card">
-
       <div class="meter-wrap">
         <div class="meter-label">NÍVEL</div>
         <div class="meter-dots" id="meterDots">
@@ -470,38 +459,78 @@
           <div class="meter-dot"></div>
         </div>
       </div>
-
       <div class="emoji-display" id="emoji">😐</div>
       <div class="conc-word" id="concWord">POUCO CONCENTRADA</div>
-
       <button class="btn btn-add" id="addBtn">➕ ADICIONAR SOLUTO</button>
       <button class="btn btn-reset" id="resetBtn">🔄 RECOMEÇAR</button>
-
     </div>
   </section>
 
-  <!-- QUESTION -->
-  <section class="question-card">
-    <div class="q-label">❓ PERGUNTA</div>
+  <!-- TUBARÃO -->
+  <div class="shark-row">
+    <div class="shark-emoji">🦈</div>
+    <div class="speech-bubble" id="sharkSpeech">
+      OLÁ! 🦈 EU SOU O TUBARÃO QUÍMICO!<br>BRINQUE COM O FRASCO E DEPOIS RESPONDA AS PERGUNTAS!
+    </div>
+  </div>
+
+  <!-- PROGRESSO DAS QUESTÕES -->
+  <div class="progress-wrap">
+    <div class="prog-dot current" id="pd0"></div>
+    <div class="prog-dot" id="pd1"></div>
+    <div class="prog-dot" id="pd2"></div>
+  </div>
+
+  <!-- QUESTÃO 1 -->
+  <section class="question-card active" id="q1">
+    <div class="q-label">❓ PERGUNTA 1 DE 3</div>
     <p class="q-text">O QUE ACONTECE QUANDO ADICIONAMOS MAIS SOLUTO NO MESMO FRASCO?</p>
-
     <div class="options">
-      <button class="option" data-answer="wrong">A SOLUÇÃO FICA MENOS CONCENTRADA</button>
-      <button class="option" data-answer="correct">A SOLUÇÃO FICA MAIS CONCENTRADA</button>
-      <button class="option" data-answer="wrong">O SOLUTO DESAPARECE</button>
+      <button class="option" data-q="1" data-answer="wrong">A SOLUÇÃO FICA MENOS CONCENTRADA</button>
+      <button class="option" data-q="1" data-answer="correct">A SOLUÇÃO FICA MAIS CONCENTRADA</button>
+      <button class="option" data-q="1" data-answer="wrong">O SOLUTO DESAPARECE</button>
     </div>
-
-    <div class="feedback" id="feedback"></div>
+    <div class="feedback" id="feedback1"></div>
   </section>
+
+  <!-- QUESTÃO 2 -->
+  <section class="question-card" id="q2">
+    <div class="q-label">❓ PERGUNTA 2 DE 3</div>
+    <p class="q-text">QUAL É O PAPEL DO SOLVENTE EM UMA SOLUÇÃO?</p>
+    <div class="options">
+      <button class="option" data-q="2" data-answer="wrong">ELE SE DISSOLVE NO SOLUTO</button>
+      <button class="option" data-q="2" data-answer="correct">ELE DISSOLVE O SOLUTO</button>
+      <button class="option" data-q="2" data-answer="wrong">ELE É A MESMA COISA QUE O SOLUTO</button>
+    </div>
+    <div class="feedback" id="feedback2"></div>
+  </section>
+
+  <!-- QUESTÃO 3 -->
+  <section class="question-card" id="q3">
+    <div class="q-label">❓ PERGUNTA 3 DE 3</div>
+    <p class="q-text">SE TIVERMOS A MESMA QUANTIDADE DE SOLUTO E ADICIONARMOS MAIS SOLVENTE, A CONCENTRAÇÃO DA SOLUÇÃO...</p>
+    <div class="options">
+      <button class="option" data-q="3" data-answer="wrong">AUMENTA</button>
+      <button class="option" data-q="3" data-answer="correct">DIMINUI</button>
+      <button class="option" data-q="3" data-answer="wrong">FICA IGUAL</button>
+    </div>
+    <div class="feedback" id="feedback3"></div>
+  </section>
+
+  <!-- DOWNLOAD FINAL -->
+  <div class="download-wrap" id="downloadWrap">
+    <div style="font-size:3.5rem; line-height:1;">🏆</div>
+    <p>PARABÉNS! VOCÊ TERMINOU A ATIVIDADE!<br>CLIQUE ABAIXO PARA SALVAR SUAS RESPOSTAS.</p>
+    <button class="btn-download" id="downloadBtn">⬇️ BAIXAR MINHAS RESPOSTAS</button>
+  </div>
 
 </main>
 
 <script>
-  // ── State ──
+  // ── Bottle state ──
   let level = 1;
   const MAX = 5;
 
-  // Solvent: fixed positions [cx, cy]
   const solvents = [
     [50,155],[100,145],[150,155],[175,185],
     [30,195],[80,210],[130,200],[170,220],
@@ -509,7 +538,6 @@
     [68,300],[120,310],[162,300]
   ];
 
-  // Solute positions per level (cumulative)
   const solutes = {
     1: [[100,230],[148,175]],
     2: [[100,230],[148,175],[55,185],[135,125]],
@@ -517,8 +545,6 @@
     4: [[100,230],[148,175],[55,185],[135,125],[178,245],[75,110],[40,260],[165,90]],
     5: [[100,230],[148,175],[55,185],[135,125],[178,245],[75,110],[40,260],[165,90],[35,125],[142,270],[185,165]]
   };
-
-  const floatAnims = ['floatA','floatB','floatC'];
 
   const states = {
     1: { badge:'POUCO CONCENTRADA', word:'POUCO CONCENTRADA', emoji:'😐' },
@@ -528,24 +554,62 @@
     5: { badge:'MÁXIMA',            word:'MUITO CONCENTRADA!', emoji:'🤩' }
   };
 
-  // ── Elements ──
-  const group       = document.getElementById('particlesGroup');
-  const concBadge   = document.getElementById('concBadge');
-  const concWord    = document.getElementById('concWord');
-  const emoji       = document.getElementById('emoji');
-  const addBtn      = document.getElementById('addBtn');
-  const resetBtn    = document.getElementById('resetBtn');
-  const meterDots   = document.getElementById('meterDots').children;
-  const feedback    = document.getElementById('feedback');
+  // ── Question state ──
+  let currentQ = 1;
+  const answers    = { 1: null, 2: null, 3: null };
+  const chosenTexts = { 1: '', 2: '', 3: '' };
 
-  // ── Particle helpers ──
+  const questionTexts = [
+    'O QUE ACONTECE QUANDO ADICIONAMOS MAIS SOLUTO NO MESMO FRASCO?',
+    'QUAL É O PAPEL DO SOLVENTE EM UMA SOLUÇÃO?',
+    'SE TIVERMOS A MESMA QUANTIDADE DE SOLUTO E ADICIONARMOS MAIS SOLVENTE, A CONCENTRAÇÃO DA SOLUÇÃO...'
+  ];
+
+  // ── Shark speech ──
+  const sharkMessages = {
+    start: 'OLÁ! 🦈 EU SOU O TUBARÃO QUÍMICO!<br>BRINQUE COM O FRASCO E DEPOIS RESPONDA AS PERGUNTAS!',
+    q1:    'OLHA BEM AS BOLINHAS LARANJAS NO FRASCO...<br>O QUE ACONTECE QUANDO VOCÊ ADICIONA MAIS? 🧐',
+    q1ok:  'ISSO AÍ! 🎉 MAIS SOLUTO = SOLUÇÃO MAIS CONCENTRADA!<br>VAMOS PARA A PRÓXIMA!',
+    q1err: 'QUASE! 😅 OBSERVE AS BOLINHAS LARANJAS NO FRASCO!',
+    q2:    'AGORA PENSE: A ÁGUA DO MAR DISSOLVE O SAL...<br>QUEM É O SOLVENTE AÍ? 💧',
+    q2ok:  'PERFEITO! 🦈💙 O SOLVENTE É QUEM DISSOLVE!<br>ÚLTIMA PERGUNTA, VAI LÁ!',
+    q2err: 'PENSE NA ÁGUA E NO SAL... QUEM DISSOLVE QUEM? 🤔',
+    q3:    'ÚLTIMA! SE VOCÊ COLOCAR MAIS ÁGUA NO SUCO,<br>ELE FICA MAIS FORTE OU MAIS FRACO? 🫙',
+    q3ok:  'INCRÍVEL! VOCÊ ARRASOU! 🏆🦈<br>BAIXE SUAS RESPOSTAS AÍ EM BAIXO!',
+    q3err: 'PENSE NO SUCO: MAIS ÁGUA = MAIS FRACO, NÉ? 🧃',
+  };
+
+  function setShark(key) {
+    document.getElementById('sharkSpeech').innerHTML = sharkMessages[key] || key;
+  }
+
+  // ── Progress ──
+  function updateProgress() {
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById('pd' + (i - 1));
+      if (answers[i] !== null) {
+        dot.className = 'prog-dot done';
+      } else if (i === currentQ) {
+        dot.className = 'prog-dot current';
+      } else {
+        dot.className = 'prog-dot';
+      }
+    }
+  }
+
+  // ── Bottle ──
+  const group     = document.getElementById('particlesGroup');
+  const concBadge = document.getElementById('concBadge');
+  const concWord  = document.getElementById('concWord');
+  const emojiEl   = document.getElementById('emoji');
+  const addBtn    = document.getElementById('addBtn');
+  const resetBtn  = document.getElementById('resetBtn');
+  const meterDots = document.getElementById('meterDots').children;
+
   function makeSVGCircle(cx, cy, r, fill, stroke, animClass, dur, delay, isNew) {
     const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('cx', cx);
-    c.setAttribute('cy', cy);
-    c.setAttribute('r', r);
-    c.setAttribute('fill', fill);
-    c.setAttribute('stroke', stroke);
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+    c.setAttribute('fill', fill); c.setAttribute('stroke', stroke);
     c.setAttribute('stroke-width', '2.5');
     c.style.setProperty('--dur', dur + 's');
     c.style.setProperty('--delay', delay + 's');
@@ -560,32 +624,20 @@
     b.addEventListener('animationend', () => b.remove());
   }
 
-  // ── Render ──
   function renderBottle(animate) {
     group.innerHTML = '';
-
-    // Solvents
     solvents.forEach(([cx,cy], i) => {
       const dur = 3 + (i % 4) * 0.4;
       const delay = -(i * 0.45) % dur;
-      const anim = 'particle-solvent';
-      const c = makeSVGCircle(cx, cy, 11, '#74d4f5', '#2ab0e8', anim, dur, delay, false);
-      group.appendChild(c);
+      group.appendChild(makeSVGCircle(cx, cy, 11, '#74d4f5', '#2ab0e8', 'particle-solvent', dur, delay, false));
     });
-
-    // Solutes
     const prev = solutes[level - 1] || [];
     solutes[level].forEach(([cx,cy], i) => {
       const dur = 2.6 + (i % 3) * 0.45;
       const delay = -(i * 0.55) % dur;
       const isNew = animate && i >= prev.length;
-      const c = makeSVGCircle(cx, cy, 12, '#ff6b35', '#c94010', 'particle-solute', dur, delay, isNew);
-      group.appendChild(c);
-
-      if (isNew) {
-        // spawn a rising bubble nearby
-        setTimeout(() => spawnBubble(cx + (Math.random()-0.5)*20, cy - 10), 80 + i*60);
-      }
+      group.appendChild(makeSVGCircle(cx, cy, 12, '#ff6b35', '#c94010', 'particle-solute', dur, delay, isNew));
+      if (isNew) setTimeout(() => spawnBubble(cx + (Math.random()-0.5)*20, cy - 10), 80 + i*60);
     });
   }
 
@@ -593,50 +645,117 @@
     const s = states[level];
     concBadge.textContent = s.badge;
     concWord.textContent  = s.word;
-    emoji.textContent     = s.emoji;
-
-    Array.from(meterDots).forEach((d, i) => {
-      d.classList.toggle('active', i < level);
-    });
-
+    emojiEl.textContent   = s.emoji;
+    Array.from(meterDots).forEach((d, i) => d.classList.toggle('active', i < level));
     addBtn.disabled = level >= MAX;
   }
 
-  function render(animate = false) {
-    renderBottle(animate);
-    updateUI();
-  }
+  function render(animate = false) { renderBottle(animate); updateUI(); }
 
-  // ── Events ──
   addBtn.addEventListener('click', () => {
     if (level < MAX) { level++; render(true); }
   });
 
   resetBtn.addEventListener('click', () => {
-    level = 1;
-    feedback.className = 'feedback';
-    feedback.textContent = '';
-    document.querySelectorAll('.option').forEach(o => {
-      o.classList.remove('correct-chosen','wrong-chosen');
-      o.disabled = false;
-    });
-    render(false);
+    level = 1; render(false);
+    currentQ = 1;
+    answers[1] = answers[2] = answers[3] = null;
+    chosenTexts[1] = chosenTexts[2] = chosenTexts[3] = '';
+    for (let i = 1; i <= 3; i++) {
+      const sec = document.getElementById('q' + i);
+      sec.classList.toggle('active', i === 1);
+      sec.querySelectorAll('.option').forEach(o => {
+        o.classList.remove('correct-chosen','wrong-chosen');
+        o.disabled = false;
+      });
+      const fb = document.getElementById('feedback' + i);
+      fb.className = 'feedback';
+      fb.textContent = '';
+    }
+    document.getElementById('downloadWrap').classList.remove('visible');
+    updateProgress();
+    setShark('start');
   });
 
+  // ── Questions ──
   document.querySelectorAll('.option').forEach(btn => {
     btn.addEventListener('click', () => {
+      const q  = parseInt(btn.dataset.q);
       const ok = btn.dataset.answer === 'correct';
-      document.querySelectorAll('.option').forEach(o => o.disabled = true);
+
+      btn.closest('.question-card').querySelectorAll('.option').forEach(o => o.disabled = true);
       btn.classList.add(ok ? 'correct-chosen' : 'wrong-chosen');
-      feedback.className = 'feedback ' + (ok ? 'correct' : 'wrong');
-      feedback.textContent = ok
-        ? '✅ MUITO BEM! MAIS SOLUTO = MAIOR CONCENTRAÇÃO.'
-        : '❌ TENTE DE NOVO. OBSERVE AS BOLINHAS LARANJAS!';
+
+      const fb = document.getElementById('feedback' + q);
+      fb.className  = 'feedback ' + (ok ? 'correct' : 'wrong');
+      fb.textContent = ok ? '✅ MUITO BEM!' : '❌ NÃO FOI DESSA VEZ...';
+
+      answers[q]     = ok ? 'CORRETA ✅' : 'INCORRETA ❌';
+      chosenTexts[q] = btn.textContent.trim();
+
+      setShark(ok ? 'q' + q + 'ok' : 'q' + q + 'err');
+      updateProgress();
+
+      const delay = ok ? 1500 : 2200;
+
+      if (q < 3) {
+        setTimeout(() => {
+          document.getElementById('q' + q).classList.remove('active');
+          currentQ = q + 1;
+          const next = document.getElementById('q' + currentQ);
+          next.classList.add('active');
+          next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          updateProgress();
+          setShark('q' + currentQ);
+        }, delay);
+      } else {
+        setTimeout(() => {
+          const dw = document.getElementById('downloadWrap');
+          dw.classList.add('visible');
+          dw.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, delay);
+      }
     });
+  });
+
+  // ── Download ──
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const nome = document.getElementById('nomeAluno').value.trim() || '(NÃO INFORMADO)';
+    const now  = new Date().toLocaleString('pt-BR');
+    const corretas = Object.values(answers).filter(v => v && v.startsWith('CORRETA')).length;
+
+    let txt = '========================================\n';
+    txt    += '  ATIVIDADE: CONCENTRAÇÃO DE UMA SOLUÇÃO\n';
+    txt    += '========================================\n\n';
+    txt    += 'ALUNO(A): ' + nome.toUpperCase() + '\n';
+    txt    += 'DATA/HORA: ' + now + '\n\n';
+    txt    += '----------------------------------------\n\n';
+
+    for (let i = 1; i <= 3; i++) {
+      txt += 'PERGUNTA ' + i + ':\n';
+      txt += questionTexts[i - 1] + '\n\n';
+      txt += 'RESPOSTA ESCOLHIDA:\n';
+      txt += (chosenTexts[i] || '—') + '\n\n';
+      txt += 'RESULTADO: ' + (answers[i] || '—') + '\n';
+      txt += '\n----------------------------------------\n\n';
+    }
+
+    txt += 'TOTAL DE ACERTOS: ' + corretas + ' DE 3\n';
+    txt += '========================================\n';
+
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'respostas_' + nome.replace(/\s+/g,'_').toLowerCase() + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
   });
 
   // ── Init ──
   render(false);
+  updateProgress();
+  setShark('start');
 </script>
 </body>
 </html>
