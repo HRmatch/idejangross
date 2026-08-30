@@ -1,0 +1,2356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1739">
+  <meta name="description" content="VAK · Chislett & Chapman — questionário Visual, Auditivo e Cinestésico com devolutiva pedagógica personalizada.">
+  <title>VAK · Chislett & Chapman | Idejan Gross</title>
+  <style>
+
+:root{
+  --bg:#f5f8fc;
+  --surface:#ffffff;
+  --ink:#10182f;
+  --muted:#62708c;
+  --line:#dfe6f1;
+  --navy:#0b1739;
+  --navy-2:#14285a;
+  --accent:#2878ff;
+  --accent-soft:#eaf2ff;
+  --visual:#6558e8;
+  --auditory:#1f8bd8;
+  --kinesthetic:#18a477;
+  --shadow:0 24px 70px rgba(12,29,66,.11);
+  --shadow-soft:0 12px 35px rgba(12,29,66,.08);
+  --radius:26px;
+  --radius-sm:17px;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 5% 0%, rgba(40,120,255,.08), transparent 27rem),
+    radial-gradient(circle at 95% 10%, rgba(101,88,232,.07), transparent 28rem),
+    var(--bg);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid rgba(40,120,255,.24);outline-offset:3px}
+.hidden{display:none!important}
+.ambient{position:fixed;z-index:-1;border-radius:999px;filter:blur(10px);pointer-events:none}
+.ambient-one{width:360px;height:360px;background:rgba(40,120,255,.055);left:-180px;top:34vh}
+.ambient-two{width:300px;height:300px;background:rgba(24,164,119,.045);right:-160px;top:62vh}
+
+.site-header{
+  max-width:1240px;
+  margin:0 auto;
+  padding:28px 28px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+.brand-mark{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  background:var(--navy);color:white;font-weight:800;letter-spacing:-.04em;
+  box-shadow:0 10px 24px rgba(11,23,57,.18);
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.05}
+.brand-text strong{font-size:.98rem}
+.brand-text small{font-size:.72rem;color:var(--muted);margin-top:5px}
+.header-pill{
+  border:1px solid var(--line);background:rgba(255,255,255,.72);backdrop-filter:blur(12px);
+  color:var(--navy-2);font-size:.78rem;font-weight:750;padding:9px 13px;border-radius:999px;
+}
+.app-shell{width:min(1180px,calc(100% - 36px));margin:0 auto}
+.screen{animation:screenIn .42s ease both}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.landing-screen{
+  min-height:calc(100vh - 150px);
+  display:grid;
+  grid-template-columns:1.07fr .93fr;
+  gap:72px;
+  align-items:center;
+  padding:48px 0 70px;
+}
+.eyebrow{
+  margin:0 0 14px;
+  font-size:.73rem;font-weight:850;letter-spacing:.14em;color:var(--accent);
+}
+.hero-copy h1,.result-hero h1{
+  margin:0;
+  color:var(--navy);
+  font-size:clamp(2.65rem,5.7vw,5.05rem);
+  line-height:.96;
+  letter-spacing:-.055em;
+  max-width:760px;
+}
+.hero-copy h1 span{color:var(--accent)}
+.hero-lead{
+  max-width:690px;
+  margin:25px 0 0;
+  font-size:1.09rem;
+  line-height:1.75;
+  color:var(--muted);
+}
+.hero-points{
+  display:flex;gap:28px;flex-wrap:wrap;margin:34px 0;
+}
+.hero-points div{display:flex;align-items:baseline;gap:8px}
+.hero-points span{font-size:1.65rem;font-weight:850;color:var(--navy)}
+.hero-points p{margin:0;color:var(--muted);font-size:.84rem}
+.start-card{
+  max-width:650px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(223,230,241,.9);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:var(--shadow-soft);
+  backdrop-filter:blur(12px);
+}
+.start-card label{display:block;font-size:.82rem;font-weight:780;margin:0 0 9px}
+.start-card label span{color:var(--muted);font-weight:550}
+.start-card input{
+  width:100%;height:50px;border:1px solid var(--line);background:white;border-radius:13px;
+  padding:0 15px;color:var(--ink);transition:.2s;
+}
+.start-card input:focus{border-color:#99bbf7;box-shadow:0 0 0 4px rgba(40,120,255,.08)}
+.start-actions{display:flex;gap:10px;margin-top:12px}
+.privacy-note{margin:13px 2px 0;color:#78849b;font-size:.72rem;line-height:1.5}
+
+.btn{
+  min-height:46px;border:0;border-radius:13px;padding:0 17px;font-weight:780;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:0 10px 24px rgba(11,23,57,.17)}
+.btn-primary:hover{background:#14275a;box-shadow:0 13px 28px rgba(11,23,57,.22)}
+.btn-primary:disabled{opacity:.38;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-ghost{background:#edf2f9;color:#35415c}
+.btn-ghost:hover{background:#e4ebf5}
+.icon-btn{
+  width:44px;height:44px;border-radius:13px;border:1px solid var(--line);background:white;
+  color:var(--navy);font-size:1.2rem;box-shadow:var(--shadow-soft);
+}
+
+.hero-panel{align-self:center}
+.mini-window{
+  position:relative;background:var(--navy);border-radius:30px;padding:13px;
+  box-shadow:0 34px 80px rgba(11,23,57,.25);transform:rotate(1.3deg);
+}
+.mini-window:before{
+  content:"";position:absolute;inset:-1px;border-radius:31px;padding:1px;
+  background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 42%);
+  pointer-events:none;
+}
+.mini-top{height:37px;display:flex;align-items:center;gap:6px;padding:0 5px;color:#aebce0}
+.mini-top span{width:7px;height:7px;border-radius:50%;background:#6e7ba0}
+.mini-top small{margin-left:auto;margin-right:7px;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+.mini-content{background:#f9fbff;border-radius:21px;padding:31px}
+.mini-label{font-size:.62rem;letter-spacing:.13em;font-weight:850;color:var(--accent);margin:0}
+.mini-content h2{font-size:1.75rem;line-height:1.12;letter-spacing:-.035em;margin:10px 0 24px;color:var(--navy)}
+.mini-score{display:grid;grid-template-columns:110px 1fr;gap:24px;align-items:center}
+.mini-ring{
+  width:108px;aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--visual) 0 38%,var(--auditory) 38% 70%,var(--kinesthetic) 70% 100%);
+  display:grid;place-items:center;
+}
+.mini-ring>div{width:72px;aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-content:center;text-align:center}
+.mini-ring strong{font-size:1.15rem;color:var(--navy)}
+.mini-ring small{color:var(--muted);font-size:.65rem}
+.mini-bars{display:flex;flex-direction:column;gap:12px}
+.mini-bars span{height:8px;background:#e6ebf3;border-radius:999px;overflow:hidden}
+.mini-bars i{display:block;height:100%;background:linear-gradient(90deg,#6385ff,#36a1d8);border-radius:inherit}
+.mini-strategies{display:flex;gap:8px;margin-top:25px;flex-wrap:wrap}
+.mini-strategies span{font-size:.7rem;padding:8px 10px;background:#edf3fb;border-radius:999px;color:#40506d;font-weight:700}
+.panel-caption{font-size:.78rem;line-height:1.6;color:var(--muted);max-width:460px;margin:22px auto 0;text-align:center}
+
+.quiz-screen{max-width:880px;margin:0 auto;padding:48px 0 80px}
+.quiz-topbar{display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:center;margin-bottom:25px}
+.progress-wrap{min-width:0}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;color:var(--muted);margin-bottom:8px}
+.progress-meta strong{color:var(--navy)}
+.progress-track{height:7px;background:#e4eaf3;border-radius:999px;overflow:hidden}
+#progressBar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6a60e8);border-radius:inherit;transition:width .3s ease}
+.question-card{
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:clamp(28px,5vw,54px);
+}
+.question-number{
+  width:47px;height:47px;border-radius:15px;display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);font-weight:850;font-size:.9rem;margin-bottom:22px;
+}
+.question-kicker{font-size:.78rem;color:var(--muted);margin:0 0 9px}
+.question-card h2{
+  font-size:clamp(1.65rem,3.2vw,2.35rem);line-height:1.17;letter-spacing:-.035em;
+  color:var(--navy);margin:0 0 30px;max-width:760px;
+}
+.options-list{display:grid;gap:11px}
+.option-card{
+  width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:16px;
+  min-height:70px;padding:14px 16px;display:grid;grid-template-columns:38px 1fr 24px;gap:13px;
+  align-items:center;color:var(--ink);transition:.18s ease;
+}
+.option-card:hover{border-color:#b7c9e8;background:#fbfdff;transform:translateY(-1px);box-shadow:0 8px 18px rgba(25,48,89,.06)}
+.option-letter{
+  width:36px;height:36px;border-radius:11px;background:#f0f4f9;color:#5d6981;
+  display:grid;place-items:center;font-size:.78rem;font-weight:850;transition:.18s;
+}
+.option-text{font-size:.94rem;line-height:1.45}
+.option-check{
+  width:21px;height:21px;border:1.5px solid #c6d0df;border-radius:50%;position:relative;transition:.18s;
+}
+.option-card.selected{border-color:#7ca7f3;background:#f6f9ff;box-shadow:0 0 0 3px rgba(40,120,255,.07)}
+.option-card.selected .option-letter{background:var(--navy);color:#fff}
+.option-card.selected .option-check{border-color:var(--accent);background:var(--accent)}
+.option-card.selected .option-check:after{
+  content:"";position:absolute;width:6px;height:10px;border:solid white;border-width:0 2px 2px 0;
+  transform:rotate(45deg);left:6px;top:3px;
+}
+.quiz-actions{display:flex;justify-content:space-between;gap:12px;margin-top:31px}
+.quiz-hint{text-align:center;color:#758198;font-size:.75rem;margin:18px auto 0;line-height:1.5}
+
+.result-screen{padding:38px 0 80px}
+.result-toolbar{display:flex;justify-content:space-between;gap:16px;margin-bottom:20px}
+.toolbar-right{display:flex;gap:9px}
+.result-hero{
+  background:linear-gradient(135deg,#0b1739,#11275c 67%,#173a73);
+  color:white;border-radius:30px;padding:clamp(34px,6vw,66px);display:grid;
+  grid-template-columns:1.4fr .6fr;gap:52px;align-items:center;box-shadow:0 30px 70px rgba(11,23,57,.2);
+  overflow:hidden;position:relative;
+}
+.result-hero:after{
+  content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-170px;top:-150px;
+  background:rgba(76,133,255,.17);
+}
+.result-hero .eyebrow{color:#8fb8ff}
+.result-hero h1{color:white;font-size:clamp(2.35rem,4.5vw,4.45rem);max-width:780px}
+.result-summary{font-size:1rem;line-height:1.72;color:#c9d4ed;max-width:760px;margin:22px 0 0}
+.dominant-badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:23px}
+.dominant-badge{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);padding:8px 11px;border-radius:999px;font-size:.72rem;font-weight:750;color:#edf4ff}
+.result-chart-card{display:grid;justify-items:center;position:relative;z-index:1}
+.donut-chart{
+  --p1:33%;--p2:66%;
+  width:min(220px,45vw);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--visual) 0 var(--p1),var(--auditory) var(--p1) var(--p2),var(--kinesthetic) var(--p2) 100%);
+  display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 20px 45px rgba(0,0,0,.18);
+}
+.donut-hole{
+  width:65%;aspect-ratio:1;border-radius:50%;display:grid;place-content:center;text-align:center;
+  background:var(--navy);box-shadow:0 0 0 1px rgba(255,255,255,.08);
+}
+.donut-hole strong{font-size:1.7rem;letter-spacing:-.05em}
+.donut-hole span{font-size:.68rem;color:#aebce0;margin-top:3px}
+.balance-label{color:#aebce0;font-size:.74rem;text-align:center;margin:15px 0 0;max-width:220px;line-height:1.5}
+
+.score-section,.strategy-section,.detail-section{margin-top:62px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:22px}
+.section-heading h2{font-size:clamp(1.55rem,3vw,2.2rem);letter-spacing:-.035em;margin:0;color:var(--navy)}
+.section-heading>p{max-width:330px;color:var(--muted);font-size:.78rem;line-height:1.55;margin:0;text-align:right}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.score-card{
+  --dim-color:var(--accent);
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow-soft);
+}
+.score-card.visual{--dim-color:var(--visual)}
+.score-card.auditory{--dim-color:var(--auditory)}
+.score-card.kinesthetic{--dim-color:var(--kinesthetic)}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dim-label{display:flex;gap:11px;align-items:center}
+.dim-icon{
+  width:38px;height:38px;border-radius:12px;background:color-mix(in srgb,var(--dim-color) 12%,white);
+  color:var(--dim-color);display:grid;place-items:center;font-weight:900;font-size:.76rem;
+}
+.dim-label strong{display:block;color:var(--navy)}
+.dim-label small{display:block;color:var(--muted);font-size:.7rem;margin-top:3px}
+.score-number{display:flex;flex-direction:column;align-items:flex-end;gap:9px;text-align:right}
+.score-ring{
+  --ring-percent:50%;--ring-color:var(--accent);
+  width:72px;aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--ring-color) 0 var(--ring-percent), #e6edf6 var(--ring-percent) 100%);
+  display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(12,29,66,.03);
+}
+.score-ring>div{
+  width:53px;aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-content:center;text-align:center;
+  box-shadow:inset 0 0 0 1px #eef2f7;
+}
+.score-ring strong{font-size:.98rem;color:var(--navy);letter-spacing:-.04em;line-height:1}
+.score-ring small{display:block;color:var(--muted);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.score-meta{display:block;color:var(--muted);font-size:.67rem;line-height:1.35;max-width:110px}
+.score-bar{height:8px;background:#edf1f6;border-radius:999px;overflow:hidden;margin-top:20px}
+.score-bar i{display:block;height:100%;width:0;background:var(--dim-color);border-radius:inherit}
+.score-caption{font-size:.74rem;color:var(--muted);line-height:1.5;margin:13px 0 0}
+
+.insight-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:15px;margin-top:15px}
+.insight-card{background:white;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow-soft)}
+.insight-card h2{font-size:1.5rem;letter-spacing:-.03em;color:var(--navy);margin:0 0 15px}
+.rich-copy p{font-size:.9rem;line-height:1.75;color:#4d5a73;margin:0 0 13px}
+.rich-copy strong{color:var(--navy)}
+.start-here{display:grid;gap:12px}
+.start-step{padding:14px;border-radius:15px;background:#f4f7fb;border:1px solid #e6ebf3}
+.start-step span{display:block;font-size:.65rem;color:var(--accent);font-weight:850;letter-spacing:.08em;margin-bottom:5px}
+.start-step p{font-size:.78rem;color:#46536c;line-height:1.55;margin:0}
+
+.strategy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.strategy-card{
+  background:white;border:1px solid var(--line);border-radius:18px;padding:20px;display:grid;
+  grid-template-columns:45px 1fr auto;gap:14px;align-items:start;box-shadow:0 7px 22px rgba(12,29,66,.05);
+}
+.strategy-rank{width:43px;height:43px;border-radius:13px;background:#eef3fa;display:grid;place-items:center;color:var(--navy);font-weight:900}
+.strategy-card h3{margin:0 0 6px;color:var(--navy);font-size:.98rem}
+.strategy-card p{margin:0;color:var(--muted);font-size:.76rem;line-height:1.58}
+.fit-tag{font-size:.62rem;font-weight:850;border-radius:999px;padding:6px 8px;white-space:nowrap}
+.fit-high{background:#e7f6ef;color:#0d7656}
+.fit-medium{background:#edf3ff;color:#2b61bd}
+.fit-support{background:#f1f3f6;color:#657086}
+
+.plan-section{
+  margin-top:62px;background:var(--navy);border-radius:26px;padding:clamp(28px,5vw,48px);color:white;
+  box-shadow:0 24px 60px rgba(11,23,57,.16);
+}
+.plan-section .eyebrow{color:#8fb8ff}.plan-section h2{color:white}
+.study-plan{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.plan-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11);border-radius:18px;padding:21px}
+.plan-card span{font-size:.65rem;letter-spacing:.1em;color:#8fb8ff;font-weight:850}
+.plan-card h3{font-size:1.05rem;margin:7px 0 8px}
+.plan-card p{color:#c8d4ed;font-size:.78rem;line-height:1.62;margin:0}
+
+.dimension-details{display:grid;gap:12px}
+.dimension-card{
+  --dim-color:var(--accent);background:white;border:1px solid var(--line);border-radius:19px;
+  padding:22px;display:grid;grid-template-columns:160px 1fr;gap:28px;box-shadow:0 8px 24px rgba(12,29,66,.045)
+}
+.dimension-card.visual{--dim-color:var(--visual)}
+.dimension-card.auditory{--dim-color:var(--auditory)}
+.dimension-card.kinesthetic{--dim-color:var(--kinesthetic)}
+.dimension-title{border-right:1px solid var(--line);padding-right:20px}
+.dimension-title strong{display:block;color:var(--dim-color);font-size:1.12rem}
+.dimension-title span{display:block;color:var(--muted);font-size:.72rem;margin-top:6px}
+.dimension-body{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
+.dimension-body p,.dimension-body li{font-size:.78rem;line-height:1.62;color:#536078}
+.dimension-body p{margin:0}
+.dimension-body ul{margin:0;padding-left:18px}
+.dimension-body li+li{margin-top:5px}
+
+.method-note{
+  margin-top:45px;border:1px solid #dce5f1;background:#f0f5fb;border-radius:19px;padding:22px 24px;
+}
+.method-note strong{color:var(--navy)}
+.method-note p{font-size:.78rem;color:#56647d;line-height:1.65;margin:7px 0 0}
+.result-footer{display:flex;justify-content:space-between;gap:20px;color:#8993a6;font-size:.7rem;margin-top:28px;padding:0 5px}
+.site-footer{text-align:center;color:#8a95a8;font-size:.7rem;padding:10px 20px 30px}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--navy);color:white;
+  border-radius:12px;padding:11px 14px;font-size:.75rem;opacity:0;pointer-events:none;transition:.22s;z-index:30;
+  box-shadow:0 16px 40px rgba(11,23,57,.22);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .landing-screen{grid-template-columns:1fr;gap:42px;padding-top:35px}
+  .hero-panel{max-width:610px;margin:0 auto;width:100%}
+  .result-hero{grid-template-columns:1fr;text-align:left}
+  .result-chart-card{justify-self:center}
+  .score-grid{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .strategy-grid{grid-template-columns:1fr}
+  .study-plan{grid-template-columns:1fr}
+  .dimension-card{grid-template-columns:1fr}
+  .dimension-title{border-right:0;border-bottom:1px solid var(--line);padding:0 0 13px}
+}
+@media (max-width:620px){
+  .site-header{padding:20px 18px 4px}.header-pill{display:none}
+  .app-shell{width:min(100% - 24px,1180px)}
+  .landing-screen{padding:34px 0 50px}
+  .hero-copy h1{font-size:2.7rem}
+  .hero-points{gap:15px}.hero-points div{width:calc(50% - 10px)}
+  .start-actions{flex-direction:column}
+  .mini-content{padding:24px}.mini-score{grid-template-columns:90px 1fr}.mini-ring{width:88px}.mini-ring>div{width:58px}
+  .quiz-screen{padding-top:28px}.question-card{padding:23px 18px}.question-card h2{font-size:1.58rem}
+  .option-card{grid-template-columns:36px 1fr 22px;padding:12px}
+  .quiz-actions{flex-direction:column-reverse}.quiz-actions .btn{width:100%}
+  .result-toolbar{flex-direction:column}.toolbar-right{display:grid;grid-template-columns:1fr 1fr}
+  .result-hero{padding:30px 22px;border-radius:23px}
+  .result-hero h1{font-size:2.55rem}
+  .section-heading{align-items:flex-start;flex-direction:column;gap:8px}.section-heading>p{text-align:left}
+  .strategy-card{grid-template-columns:40px 1fr}.fit-tag{grid-column:2;justify-self:start}
+  .dimension-body{grid-template-columns:1fr}
+  .result-footer{flex-direction:column}
+}
+@media print{
+  body{background:white}
+  .no-print,.site-header,.site-footer,.ambient{display:none!important}
+  .app-shell{width:100%;max-width:none}
+  .result-screen{padding:0}
+  .result-hero,.plan-section{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .score-card,.insight-card,.strategy-card,.dimension-card{box-shadow:none;break-inside:avoid}
+  .strategy-section,.detail-section,.plan-section{break-inside:avoid-page}
+}
+
+
+/* Onboarding metodológico e consentimento */
+.onboarding-screen{max-width:900px}
+.onboarding-screen .progress-track>div{height:100%;background:linear-gradient(90deg,var(--accent),#6a60e8);border-radius:inherit}
+.notice-card h2,.consent-card h2{max-width:790px}
+.notice-copy{display:grid;gap:13px;color:#4d5a73}
+.notice-copy>p{margin:0;font-size:.9rem;line-height:1.72}
+.notice-copy strong{color:var(--navy)}
+.notice-highlight{margin-top:4px;padding:18px 19px;border-radius:16px;background:#f1f6fd;border:1px solid #dce8f7}
+.notice-highlight>strong{display:block;margin-bottom:9px;font-size:.86rem}
+.notice-highlight ul{margin:0;padding-left:20px}
+.notice-highlight li{font-size:.8rem;line-height:1.6;color:#536078}
+.notice-highlight li+li{margin-top:6px}
+.privacy-highlight{background:#f2f8f5;border-color:#d8ece3}
+.privacy-highlight p{margin:6px 0 0;font-size:.79rem;line-height:1.6}
+.reference-details{border-top:1px solid var(--line);padding-top:12px;margin-top:3px}
+.reference-details summary{cursor:pointer;color:#4e5d78;font-size:.77rem;font-weight:750}
+.reference-details p{font-size:.74rem;line-height:1.6;color:#69758b;margin:10px 0 0}
+.minor-note{font-size:.75rem!important;color:#6d788d!important;padding-left:12px;border-left:3px solid #dce4ef}
+.onboarding-actions{margin-top:25px}
+.consent-options{display:grid;gap:11px;margin-top:24px}
+.consent-option{width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;display:grid;grid-template-columns:24px 1fr;gap:13px;text-align:left;align-items:start;transition:.18s ease}
+.consent-option:hover{border-color:#b7c9e8;background:#fbfdff}
+.consent-radio{width:21px;height:21px;border:1.5px solid #bac6d8;border-radius:50%;position:relative;margin-top:1px}
+.consent-option strong{display:block;color:var(--navy);font-size:.88rem}
+.consent-option small{display:block;color:#67748c;font-size:.75rem;line-height:1.55;margin-top:5px}
+.consent-option.selected{border-color:#78a4ef;background:#f6f9ff;box-shadow:0 0 0 3px rgba(40,120,255,.07)}
+.consent-option.selected .consent-radio{background:var(--accent);border-color:var(--accent)}
+.consent-option.selected .consent-radio:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;left:5.5px;top:5.5px}
+@media(max-width:620px){.onboarding-actions{flex-direction:column-reverse}.onboarding-actions .btn{width:100%}.notice-highlight{padding:15px}}
+
+/* V3 — instrument fidelity */
+.neutral-ring{
+  background:conic-gradient(#8795ae 0 33.333%, #657590 33.333% 66.666%, #aab4c6 66.666% 100%) !important;
+}
+.notice-highlight li strong{color:var(--navy)}
+
+@media (max-width:620px){.score-ring{width:64px}.score-ring>div{width:47px}.score-meta{max-width:none}}
+
+  
+/* ANEXO DE RESPOSTAS — visível somente ao imprimir/salvar em PDF */
+.print-only{display:none}
+
+@media print{
+  .print-only{display:block!important}
+
+  .print-appendix{
+    break-before:page;
+    page-break-before:always;
+    padding:10mm 7mm 0;
+    color:#111827;
+    background:#fff;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .appendix-header{
+    border-bottom:2px solid #111827;
+    padding-bottom:12px;
+    margin-bottom:18px;
+  }
+
+  .appendix-kicker{
+    margin:0 0 5px;
+    font-size:9pt;
+    font-weight:800;
+    letter-spacing:.12em;
+    color:#4b5563;
+  }
+
+  .appendix-header h1{
+    margin:0;
+    font-size:19pt;
+    line-height:1.15;
+    letter-spacing:-.02em;
+    color:#111827;
+  }
+
+  .appendix-header p{
+    margin:7px 0 0;
+    font-size:9pt;
+    line-height:1.45;
+    color:#4b5563;
+  }
+
+  .appendix-meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 20px;
+    margin:0 0 18px;
+    padding:12px 14px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    background:#f9fafb;
+    break-inside:avoid;
+  }
+
+  .appendix-meta-item small{
+    display:block;
+    margin-bottom:2px;
+    font-size:7.5pt;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:#6b7280;
+  }
+
+  .appendix-meta-item strong{
+    display:block;
+    font-size:9.5pt;
+    line-height:1.35;
+    color:#111827;
+  }
+
+  .appendix-consent{
+    grid-column:1 / -1;
+    margin-top:3px;
+    padding-top:9px;
+    border-top:1px solid #d1d5db;
+  }
+
+  .appendix-section-title{
+    margin:20px 0 10px;
+    font-size:13pt;
+    color:#111827;
+  }
+
+  .appendix-question{
+    break-inside:avoid;
+    page-break-inside:avoid;
+    margin:0 0 9px;
+    padding:0 0 9px;
+    border-bottom:1px solid #e5e7eb;
+  }
+
+  .appendix-question-title{
+    margin:0 0 5px;
+    font-size:9pt;
+    line-height:1.4;
+    font-weight:700;
+    color:#111827;
+  }
+
+  .appendix-answer{
+    display:flex;
+    align-items:flex-start;
+    gap:7px;
+    font-size:8.5pt;
+    line-height:1.42;
+    color:#374151;
+  }
+
+  .appendix-answer-letter{
+    flex:0 0 auto;
+    min-width:20px;
+    height:20px;
+    border-radius:5px;
+    display:inline-grid;
+    place-items:center;
+    font-size:8pt;
+    font-weight:900;
+    color:#fff;
+    background:#111827;
+  }
+
+  .appendix-footer-note{
+    margin-top:16px;
+    padding-top:10px;
+    border-top:1px solid #d1d5db;
+    font-size:7.5pt;
+    line-height:1.45;
+    color:#6b7280;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#" data-action="home" aria-label="Voltar ao início">
+      <span class="brand-mark">IG</span>
+      <span class="brand-text">
+        <strong>Idejan Gross</strong>
+        <small>Educação &amp; Pesquisa</small>
+      </span>
+    </a>
+    <div class="header-pill">Ferramenta de estudo</div>
+  </header>
+
+  <main class="app-shell">
+    <section id="landingScreen" class="screen landing-screen">
+      <div class="hero-copy">
+        <p class="eyebrow">VISUAL · AUDITIVO · CINESTÉSICO</p>
+        <h1>Descubra como você tende a <span>organizar melhor o estudo.</span></h1>
+        <p class="hero-lead">
+          Responda aos 30 itens do instrumento original de Chislett &amp; Chapman (2005) e receba um mapa das suas preferências,
+          com sugestões práticas para leitura, resumos, videoaulas, anotações, exercícios,
+          projetos e outras formas de estudar.
+        </p>
+
+        <div class="hero-points" aria-label="Características do teste">
+          <div><span>30</span><p>itens originais</p></div>
+          <div><span>3</span><p>dimensões</p></div>
+          <div><span>1</span><p>plano personalizado</p></div>
+        </div>
+
+        <div class="start-card">
+          <label for="studentName">Como posso chamar você? <span>(opcional)</span></label>
+          <input id="studentName" maxlength="40" autocomplete="given-name" placeholder="Seu primeiro nome">
+          <div class="start-actions">
+            <button id="startBtn" class="btn btn-primary">Começar o questionário <span aria-hidden="true">→</span></button>
+            <button id="resumeBtn" class="btn btn-ghost hidden">Continuar questionário</button>
+          </div>
+          <p class="privacy-note">Nesta versão local, suas respostas ficam somente neste navegador. Nada é enviado para um servidor.</p>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Prévia do resultado">
+        <div class="mini-window">
+          <div class="mini-top">
+            <span></span><span></span><span></span>
+            <small>seu mapa de estudo</small>
+          </div>
+          <div class="mini-content">
+            <p class="mini-label">INSTRUMENTO ORIGINAL · 30 ITENS</p>
+            <h2>Responda primeiro. Veja a interpretação somente ao final.</h2>
+            <div class="mini-score">
+              <div class="mini-ring neutral-ring">
+                <div><strong>A·B·C</strong><small>scoring</small></div>
+              </div>
+              <div class="mini-bars">
+                <span><i style="width:78%"></i></span>
+                <span><i style="width:56%"></i></span>
+                <span><i style="width:68%"></i></span>
+              </div>
+            </div>
+            <div class="mini-strategies">
+              <span>30 respostas</span><span>contagem A/B/C</span><span>resultado ao final</span>
+            </div>
+          </div>
+        </div>
+        <p class="panel-caption">Seguindo a orientação do instrumento, as explicações dos estilos aparecem somente depois das 30 respostas.</p>
+      </aside>
+    </section>
+
+    <section id="methodScreen" class="screen quiz-screen onboarding-screen hidden">
+      <div class="quiz-topbar">
+        <button class="icon-btn onboarding-home" aria-label="Voltar ao início">←</button>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Antes de começar · etapa 1 de 2</span><strong>Informação importante</strong></div>
+          <div class="progress-track"><div style="width:50%"></div></div>
+        </div>
+      </div>
+
+      <article class="question-card notice-card">
+        <div class="question-number">00</div>
+        <p class="question-kicker">LEIA ANTES DE RESPONDER</p>
+        <h2>Este questionário é uma ferramenta de reflexão — não um diagnóstico.</h2>
+        <div class="notice-copy">
+          <p>Esta aplicação utiliza os <strong>30 itens do instrumento do Questionário de Autoavaliação de Estilos de Aprendizagem VAK</strong>, de <strong>Victoria Chislett e Alan Chapman (2005)</strong>. Os 30 itens foram traduzidos para o português e receberam pequenos ajustes de linguagem e contexto para estudantes em 2026. A ordem A/B/C, a dimensão associada a cada alternativa e a regra de pontuação foram mantidas conforme o documento de origem.</p>
+          <p><strong>Importante sobre esta versão:</strong> o instrumento original está em inglês. Nesta aplicação, os 30 itens foram traduzidos para o português. Esta é uma <strong>versão traduzida e contextualizada</strong>: foram atualizadas apenas referências datadas e formulações pouco naturais em português, sem trocar a categoria A/B/C de nenhuma alternativa. Ela <strong>não corresponde a uma versão oficialmente validada em português</strong>. O sistema de pontuação permanece o mesmo do instrumento de origem.</p>
+          <p>O próprio instrumento informa que <strong>não é um teste cientificamente validado</strong> e que foi criado para oferecer uma indicação ampla de preferências de aprendizagem. Portanto, o resultado deve ser interpretado com cautela e não como diagnóstico, medida de inteligência ou capacidade.</p>
+          <div class="notice-highlight">
+            <strong>Como o scoring será feito</strong>
+            <ul>
+              <li>Cada item recebe exatamente uma resposta: <strong>A, B ou C</strong>.</li>
+              <li>Ao final, a aplicação soma quantos A, B e C foram escolhidos.</li>
+              <li><strong>Predomínio de A = Visual; predomínio de B = Auditivo; predomínio de C = Cinestésico.</strong></li>
+              <li>Os percentuais do dashboard são apenas <strong>contagem ÷ 30 × 100</strong> para facilitar a leitura e não modificam a classificação.</li>
+              <li>O documento menciona que algumas pessoas podem apresentar uma mistura de estilos, mas <strong>não estabelece margem numérica</strong>. Esta aplicação, portanto, não cria um ponto de corte adicional.</li>
+            </ul>
+          </div>
+          <details class="reference-details">
+            <summary>Referência e regra metodológica</summary>
+            <p>CHISLETT, Victoria; CHAPMAN, Alan. <em>Questionário de Autoavaliação de Estilos de Aprendizagem VAK</em>. 2005. O formulário orienta responder primeiro e ler a explicação apenas depois de concluído.</p>
+          </details>
+        </div>
+        <div class="quiz-actions onboarding-actions">
+          <button id="methodBackBtn" class="btn btn-ghost">← Voltar</button>
+          <button id="methodAcceptBtn" class="btn btn-primary">Entendi, quero continuar →</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="consentScreen" class="screen quiz-screen onboarding-screen hidden">
+      <div class="quiz-topbar">
+        <button class="icon-btn onboarding-home" aria-label="Voltar ao início">←</button>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Antes de começar · etapa 2 de 2</span><strong>Uso dos dados</strong></div>
+          <div class="progress-track"><div style="width:100%"></div></div>
+        </div>
+      </div>
+
+      <article class="question-card consent-card">
+        <div class="question-number">✓</div>
+        <p class="question-kicker">SUA ESCOLHA É VOLUNTÁRIA</p>
+        <h2>Posso usar suas respostas para melhorar esta ferramenta e as atividades pedagógicas?</h2>
+        <div class="notice-copy">
+          <p>Se você autorizar, suas respostas e o resultado poderão ser considerados <strong>de forma agregada e sem identificação direta</strong> para aperfeiçoar materiais, estratégias de ensino e futuras versões desta ferramenta.</p>
+          <p>Seu nome é opcional e serve apenas para personalizar a tela. <strong>Ele não deve fazer parte do conjunto de dados usado para esse aprimoramento.</strong> Sua escolha abaixo não muda seu resultado, sua nota, sua avaliação escolar nem seu acesso ao questionário.</p>
+          <div class="notice-highlight privacy-highlight">
+            <strong>Este aceite é específico.</strong>
+            <p>Ele se refere ao aprimoramento pedagógico e da ferramenta. Não autoriza, por si só, publicação científica de dados identificáveis nem substitui procedimentos éticos eventualmente necessários para um projeto de pesquisa.</p>
+          </div>
+          <p class="minor-note">Se você for menor de 18 anos, esta escolha registra sua manifestação como estudante. Em eventual pesquisa científica com menores, deverão ser observados os procedimentos de assentimento, consentimento do responsável e avaliação ética aplicáveis.</p>
+        </div>
+
+        <div class="consent-options" role="radiogroup" aria-label="Escolha sobre uso pedagógico dos dados">
+          <button type="button" class="consent-option" data-consent="authorized" role="radio" aria-checked="false">
+            <span class="consent-radio"></span>
+            <span><strong>Sim, eu autorizo</strong><small>Minhas respostas podem ser usadas de forma agregada e sem identificação direta para aprimoramento pedagógico.</small></span>
+          </button>
+          <button type="button" class="consent-option" data-consent="declined" role="radio" aria-checked="false">
+            <span class="consent-radio"></span>
+            <span><strong>Prefiro não autorizar</strong><small>Quero fazer o questionário normalmente, mas minhas respostas não devem ser usadas para esse fim.</small></span>
+          </button>
+        </div>
+
+        <div class="quiz-actions onboarding-actions">
+          <button id="consentBackBtn" class="btn btn-ghost">← Voltar</button>
+          <button id="consentContinueBtn" class="btn btn-primary" disabled>Continuar para as questões →</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="quizScreen" class="screen quiz-screen hidden">
+      <div class="quiz-topbar">
+        <button id="quitBtn" class="icon-btn" aria-label="Voltar ao início">←</button>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span id="progressLabel">Questão 1 de 30</span>
+            <strong id="progressPercent">5%</strong>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5">
+            <div id="progressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <article class="question-card">
+        <div class="question-number" id="questionNumber">01</div>
+        <p class="question-kicker">Marque a alternativa que melhor representa como você geralmente se comporta.</p>
+        <h2 id="questionText"></h2>
+        <div id="optionsList" class="options-list" role="radiogroup" aria-label="Alternativas"></div>
+
+        <div class="quiz-actions">
+          <button id="prevBtn" class="btn btn-ghost">← Anterior</button>
+          <button id="nextBtn" class="btn btn-primary" disabled>Continuar →</button>
+        </div>
+      </article>
+
+      <p class="quiz-hint">Versão em português, com atualização contextual conservadora dos 30 itens. É melhor concluir todas as questões antes de ler a explicação dos estilos.</p>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen hidden">
+      <div class="result-toolbar no-print">
+        <button id="restartBtn" class="btn btn-ghost">↻ Refazer</button>
+        <div class="toolbar-right">
+          <button id="copyBtn" class="btn btn-ghost">Copiar resumo</button>
+          <button id="printBtn" class="btn btn-primary">Salvar / imprimir</button>
+        </div>
+      </div>
+
+      <section class="result-hero">
+        <div class="result-hero-copy">
+          <p class="eyebrow">RESULTADO · CHISLETT &amp; CHAPMAN (2005)</p>
+          <h1 id="resultTitle"></h1>
+          <p id="resultSummary" class="result-summary"></p>
+          <div id="dominantBadges" class="dominant-badges"></div>
+        </div>
+        <div class="result-chart-card">
+          <div id="donutChart" class="donut-chart" aria-label="Distribuição das três dimensões">
+            <div class="donut-hole">
+              <strong id="profileShort">VAK</strong>
+              <span>perfil</span>
+            </div>
+          </div>
+          <p id="balanceLabel" class="balance-label"></p>
+        </div>
+      </section>
+
+      <section class="score-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RESULTADO GERAL</p>
+            <h2>Como suas respostas se distribuíram</h2>
+          </div>
+          <p>Scoring original: contagem de A, B e C. Percentuais = contagem ÷ 30, apenas para visualização.</p>
+        </div>
+        <div id="scoreGrid" class="score-grid"></div>
+      </section>
+
+      <section class="insight-grid">
+        <article class="insight-card insight-main">
+          <p class="eyebrow">EXPLICAÇÃO DO PERFIL</p>
+          <h2 id="profileHeadline"></h2>
+          <div id="profileNarrative" class="rich-copy"></div>
+        </article>
+        <article class="insight-card">
+          <p class="eyebrow">SEU MELHOR PONTO DE PARTIDA</p>
+          <h2>Comece assim</h2>
+          <div id="startHere" class="start-here"></div>
+        </article>
+      </section>
+
+      <section class="strategy-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CAMADA PEDAGÓGICA COMPLEMENTAR</p>
+            <h2>Onde cada forma de estudar pode ajudar</h2>
+          </div>
+          <p>Estas sugestões são complementares ao instrumento e não fazem parte do scoring original.</p>
+        </div>
+        <div id="strategyGrid" class="strategy-grid"></div>
+      </section>
+
+      <section class="plan-section">
+        <div class="section-heading light">
+          <div>
+            <p class="eyebrow">TRANSFORME O RESULTADO EM AÇÃO</p>
+            <h2>Um roteiro de estudo para experimentar</h2>
+          </div>
+        </div>
+        <div id="studyPlan" class="study-plan"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">DETALHAMENTO</p>
+            <h2>Entenda cada dimensão do seu resultado</h2>
+          </div>
+        </div>
+        <div id="dimensionDetails" class="dimension-details"></div>
+      </section>
+
+      <section class="method-note">
+        <strong>Uma observação importante</strong>
+        <p>
+          A classificação acima segue a regra publicada pelo instrumento: soma de A, B e C e identificação da categoria mais escolhida.
+          O documento original não fornece um ponto de corte para transformar escores próximos em um perfil combinado; por isso,
+          esta aplicação não utiliza margem artificial de dominância. Os percentuais são apenas uma representação dos mesmos totais.
+          As recomendações pedagógicas posteriores são uma camada complementar desta aplicação e não alteram o resultado do instrumento.
+        </p>
+      </section>
+
+      <footer class="result-footer">
+        <span>VAK · Chislett & Chapman</span>
+        <span>Idejan Gross · Educação &amp; Pesquisa</span>
+      </footer>
+
+      <section id="printAppendix" class="print-only print-appendix" aria-hidden="true">
+        <header class="appendix-header">
+          <p class="appendix-kicker">ANEXO DO RELATÓRIO</p>
+          <h1>Registro da aplicação e das respostas</h1>
+          <p>Este anexo é inserido apenas na versão impressa/PDF e não aparece no dashboard durante o uso normal da aplicação.</p>
+        </header>
+
+        <div id="appendixMeta" class="appendix-meta"></div>
+
+        <h2 class="appendix-section-title">Perguntas e respostas registradas</h2>
+        <div id="appendixAnswers"></div>
+
+        <p class="appendix-footer-note">
+          Registro gerado automaticamente pela aplicação. O nome, quando informado, é incluído apenas neste relatório.
+          A manifestação sobre uso pedagógico dos dados corresponde à escolha realizada antes do início das questões.
+        </p>
+      </section>
+
+    </section>
+  </main>
+
+  <footer class="site-footer no-print">
+    <p>Aplicação local do Questionário de Autoavaliação de Estilos de Aprendizagem VAK (Chislett & Chapman, 2005).</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+'use strict';
+
+const CONFIG = {
+  totalQuestions: 30,
+  storageKey: 'ig-vak-chislett-chapman-2005-v1',
+  instrumentVersion: 'Chislett-Chapman-VAK-2005-PTBR-contextual-2026-v1',
+  methodologyNoticeVersion: '2.0',
+  consentVersion: '1.0'
+};
+
+const QUESTIONS = [
+  {
+    "id": "q1",
+    "prompt": "Quando uso um equipamento novo, geralmente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "leio primeiro as instruções",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "ouço uma explicação de alguém que já usou o equipamento",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "começo a usar e vou descobrindo como funciona durante o uso",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q2",
+    "prompt": "Quando preciso de orientações para chegar a algum lugar, geralmente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "consulto um mapa",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "peço orientações faladas",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "sigo minha intuição e vou me orientando pelo próprio caminho",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q3",
+    "prompt": "Quando preparo um prato novo, gosto de:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "seguir uma receita escrita",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "peço a alguém que me explique como fazer",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "seguir meus instintos, experimentando enquanto preparo",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q4",
+    "prompt": "Se estou ensinando algo novo a alguém, tendo a:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "escrever as instruções para a pessoa",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "dar uma explicação verbal",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "demonstrar primeiro e depois deixar a pessoa tentar",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q5",
+    "prompt": "Costumo dizer:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "observe como eu faço",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "escute minha explicação",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "agora tente você",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q6",
+    "prompt": "No meu tempo livre, gosto mais de:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "ir a museus e galerias",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "ouvir música e conversar com meus amigos",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "praticar esportes ou fazer atividades manuais",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q7",
+    "prompt": "Quando vou comprar roupas, tendo a:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "imaginar como elas ficariam em mim",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "conversar sobre elas com os funcionários da loja",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "experimentá-las e testá-las",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q8",
+    "prompt": "Quando escolho um destino de férias, geralmente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "consulto sites, imagens e informações sobre o destino",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "ouço recomendações de amigos",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "imagino como seria estar naquele lugar",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q9",
+    "prompt": "Se eu fosse comprar um carro novo, eu:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "leio avaliações e comparativos sobre os modelos",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "conversaria com meus amigos sobre o que preciso",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "faria test-drive em vários modelos diferentes",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q10",
+    "prompt": "Quando estou aprendendo uma nova habilidade, sinto-me mais confortável:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "observando o que o professor está fazendo",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "conversando com o professor, passo a passo, sobre o que devo fazer",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "tentando fazer por conta própria e descobrindo enquanto pratico",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q11",
+    "prompt": "Quando escolho uma comida no cardápio, tendo a:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "imaginar como a comida vai parecer",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "falo sobre as opções, mentalmente ou com quem está comigo",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "imaginar qual será o sabor da comida",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q12",
+    "prompt": "Quando escuto uma banda, não consigo evitar:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "observar os integrantes da banda e outras pessoas na plateia",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "prestar atenção na letra e no ritmo",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "me movimentar no ritmo da música",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q13",
+    "prompt": "Quando preciso me concentrar, na maioria das vezes:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "foco nas palavras ou imagens que estão diante de mim",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "discuto mentalmente o problema e as possíveis soluções",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "me movimento bastante, mexo em canetas, lápis e outros objetos",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q14",
+    "prompt": "Escolho móveis e objetos para casa porque gosto:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "das cores e da aparência",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "das descrições feitas pelos vendedores",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "das texturas e da sensação ao tocá-los",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q15",
+    "prompt": "Minha primeira lembrança é de:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "estar olhando para alguma coisa",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "alguém falando comigo",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "estar fazendo alguma coisa",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q16",
+    "prompt": "Quando estou ansioso(a), eu:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "visualizo os piores cenários possíveis",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "fico repassando mentalmente aquilo que mais me preocupa",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "não consigo ficar parado(a), mexo em coisas e me movimento constantemente",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q17",
+    "prompt": "Sinto-me especialmente conectado(a) a outras pessoas por causa:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "da aparência delas",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "do que elas dizem para mim",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "de como elas me fazem sentir",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q18",
+    "prompt": "Quando preciso revisar para uma prova, geralmente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "faço muitas anotações de revisão e diagramas",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "repasso minhas anotações falando, sozinho(a) ou com outras pessoas",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "imagino-me realizando o procedimento ou montando a fórmula",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q19",
+    "prompt": "Quando explico algo para alguém, tendo a:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "mostrar o que quero dizer",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "explicar de maneiras diferentes até a pessoa entender",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "incentivar a pessoa a tentar e ir orientando enquanto ela faz",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q20",
+    "prompt": "Eu realmente gosto de:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "assistir a filmes, ver fotografias, apreciar arte ou observar pessoas",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "ouvir música, podcasts ou conversar com amigos",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "praticar esportes, experimentar comidas diferentes ou dançar",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q21",
+    "prompt": "Passo a maior parte do meu tempo livre:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "assistindo a vídeos, filmes ou séries",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "conversando com amigos",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "fazendo atividade física ou construindo/fazendo coisas",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q22",
+    "prompt": "Quando faço o primeiro contato com uma pessoa nova, geralmente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "marco um encontro presencial",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "converso com ela por chamada de voz",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "tento encontrá-la enquanto fazemos outra atividade, como uma refeição ou passeio",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q23",
+    "prompt": "A primeira coisa que noto nas pessoas é:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "como elas se parecem e se vestem",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "como elas soam e falam",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "como elas ficam em pé e se movimentam",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q24",
+    "prompt": "Quando fico com raiva, tendo a:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "ficar repetindo mentalmente aquilo que me deixou irritado(a)",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "elevar a voz e dizer às pessoas como me sinto",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "andar de um lado para o outro, bater portas e demonstrar fisicamente minha raiva",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q25",
+    "prompt": "Tenho mais facilidade para lembrar de:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "rostos",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "nomes",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "coisas que fiz",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q26",
+    "prompt": "Acho que é possível perceber se alguém está mentindo quando:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "a pessoa evita olhar para você",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "a voz da pessoa muda",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "a pessoa me transmite uma sensação estranha",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q27",
+    "prompt": "Quando encontro um velho amigo:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "digo: “Que bom ver você!”",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "digo: “Que bom falar com você!”",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "dou um abraço ou aperto de mão",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q28",
+    "prompt": "Lembro melhor das coisas quando:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "faço anotações ou guardo materiais escritos",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "digo em voz alta ou repito mentalmente palavras e pontos principais",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "faço e pratico a atividade ou imagino a atividade sendo realizada",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q29",
+    "prompt": "Se preciso reclamar de um produto com defeito, sinto-me mais confortável:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "escrevendo uma mensagem ou e-mail",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "fazendo a reclamação por chamada de voz",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "levando o produto de volta à loja ou a um ponto de atendimento",
+        "dimension": "K"
+      }
+    ]
+  },
+  {
+    "id": "q30",
+    "prompt": "Costumo dizer:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "digo algo como: “Vejo o que você quer dizer.”",
+        "dimension": "V"
+      },
+      {
+        "letter": "B",
+        "text": "digo algo como: “Entendo o que você está dizendo.”",
+        "dimension": "A"
+      },
+      {
+        "letter": "C",
+        "text": "digo algo como: “Sei como você se sente.”",
+        "dimension": "K"
+      }
+    ]
+  }
+];
+
+const DIMENSIONS = {
+  V: {
+    name: 'Visual',
+    short: 'V',
+    className: 'visual',
+    color: '#6558e8',
+    caption: 'Ver, organizar e representar',
+    detail: 'Pessoas com predominância visual tendem a ganhar clareza quando a informação pode ser vista, comparada e organizada no espaço.',
+    ideas: ['diagramas, esquemas e fluxos', 'palavras-chave e hierarquia visual', 'gráficos, tabelas e imagens']
+  },
+  A: {
+    name: 'Auditivo',
+    short: 'A',
+    className: 'auditory',
+    color: '#1f8bd8',
+    caption: 'Ouvir, explicar e verbalizar',
+    detail: 'Pessoas com predominância auditiva tendem a processar melhor as ideias quando conseguem ouvi-las, colocá-las em palavras e acompanhar uma explicação.',
+    ideas: ['explicar o conteúdo em voz alta', 'videoaulas e aulas dialogadas', 'perguntas, debates e gravações curtas']
+  },
+  K: {
+    name: 'Cinestésico',
+    short: 'C',
+    className: 'kinesthetic',
+    color: '#18a477',
+    caption: 'Fazer, experimentar e aplicar',
+    detail: 'Pessoas com predominância cinestésica tendem a consolidar conhecimento quando interagem com o problema, produzem algo ou transformam teoria em ação.',
+    ideas: ['exercícios e resolução de problemas', 'experimentos, modelos e protótipos', 'simulações, programação e prática']
+  }
+};
+
+const PROFILES = {
+  V: {
+    title: 'Seu caminho mais forte passa pelo visual.',
+    headline: 'Você tende a entender melhor quando consegue enxergar a estrutura do conteúdo.',
+    summary: 'Imagens, organização espacial, esquemas e relações visíveis parecem funcionar como âncoras importantes para você. Isso não significa “aprender só olhando”: o maior ganho aparece quando você transforma o que vê em algo que consegue explicar e usar.',
+    narrative: [
+      'Para você, <strong>clareza visual costuma reduzir a sensação de conteúdo solto</strong>. Um capítulo longo pode se tornar muito mais manejável quando vira uma página com títulos, setas, comparação, sequência e poucas palavras-chave.',
+      '<strong>Resumos podem ter bastante valor</strong>, desde que não sejam cópias extensas. Tente resumir para organizar: use hierarquia, quadros comparativos, desenhos, gráficos e fórmulas destacadas. Depois feche o material e reconstrua a ideia sem olhar.',
+      'Videoaulas também podem funcionar muito bem quando o professor <strong>mostra o raciocínio</strong>: escreve, desenha, resolve e compara. Só assistir passivamente, porém, pode dar falsa sensação de domínio. Pause e produza alguma coisa a partir do vídeo.'
+    ],
+    start: [
+      ['1 · MAPEIE', 'Antes de aprofundar, faça uma visão geral: títulos, conceitos centrais, fórmulas, etapas e relações.'],
+      ['2 · REDUZA', 'Converta o conteúdo em um esquema de uma página ou quadro comparativo.'],
+      ['3 · RECUPERE', 'Feche o material e tente redesenhar ou reescrever a estrutura de memória.']
+    ]
+  },
+  A: {
+    title: 'Seu caminho mais forte passa pela linguagem e pelo som.',
+    headline: 'Você tende a ganhar compreensão quando consegue ouvir e colocar a ideia em palavras.',
+    summary: 'Explicações, conversas, ritmo da fala e verbalização parecem ter um papel importante para você. Seu estudo fica especialmente poderoso quando ouvir deixa de ser passivo e vira explicação, pergunta, resposta e reconstrução com suas próprias palavras.',
+    narrative: [
+      'Você pode perceber nuances em uma boa explicação que outras pessoas deixam passar. <strong>Ouvir o raciocínio e depois reproduzi-lo em palavras</strong> tende a ser mais valioso do que simplesmente reler várias vezes.',
+      'Videoaulas e aulas gravadas podem ajudar bastante, mas use uma regra: ao final de um trecho, pare e responda em voz alta “o que eu entendi?”. Se a resposta sair confusa, volte apenas ao ponto necessário.',
+      '<strong>Resumos ainda são úteis</strong>, especialmente quando servem de roteiro para você explicar o assunto. Em vez de escrever páginas e páginas, experimente tópicos curtos, perguntas e palavras-gatilho que façam você reconstruir oralmente a resposta.'
+    ],
+    start: [
+      ['1 · ESCUTE COM PROPÓSITO', 'Entre no tema com uma explicação curta e tente identificar a pergunta central.'],
+      ['2 · EXPLIQUE', 'Sem olhar, conte o conteúdo como se estivesse ensinando um colega.'],
+      ['3 · TESTE', 'Transforme os pontos difíceis em perguntas e responda sem consultar o material.']
+    ]
+  },
+  K: {
+    title: 'Seu caminho mais forte passa pela ação.',
+    headline: 'Você tende a entender de verdade quando consegue fazer alguma coisa com a ideia.',
+    summary: 'Aplicar, testar, manipular, construir e resolver parecem ser caminhos importantes para você. O conteúdo ganha sentido quando deixa de ser apenas informação e vira tarefa, problema, experimento, modelo ou produção.',
+    narrative: [
+      'Para você, <strong>a prática pode ser a porta de entrada para a teoria</strong>. Um exercício, experimento, simulação ou pequeno projeto pode criar a necessidade de entender o conceito — e isso torna a leitura posterior muito mais significativa.',
+      'Anotar à mão pode ser valioso quando a anotação é ativa: montar uma solução, desenhar etapas, reorganizar uma explicação ou registrar o que aconteceu em uma experiência. Copiar mecanicamente tende a entregar bem menos.',
+      '<strong>Resumos funcionam melhor depois de você interagir com o conteúdo</strong>. Primeiro tente resolver, construir, simular ou aplicar; depois registre em poucas linhas o princípio que explica o que você fez e os erros que precisou corrigir.'
+    ],
+    start: [
+      ['1 · ENCARE UM PROBLEMA', 'Comece com uma questão, situação prática, demonstração ou desafio curto.'],
+      ['2 · FAÇA E AJUSTE', 'Resolva, simule, modele, programe, monte ou experimente — e registre onde travou.'],
+      ['3 · GENERALIZE', 'Depois da prática, escreva qual conceito explica o resultado e quando ele pode ser usado de novo.']
+    ]
+  },
+  VA: {
+    title: 'Você combina visão e linguagem.',
+    headline: 'Seu estudo tende a crescer quando você vê a estrutura e depois consegue explicá-la.',
+    summary: 'Organização visual e explicação verbal aparecem quase lado a lado. Você provavelmente tira bom proveito de materiais que mostram relações com clareza e, em seguida, permitem conversar, ouvir ou explicar o raciocínio.',
+    narrative: [
+      'Uma estratégia especialmente promissora é <strong>ver → organizar → explicar</strong>. Comece por um esquema, quadro, gráfico ou resolução; depois tente narrar o que está acontecendo com suas próprias palavras.',
+      '<strong>Resumos podem ser excelentes para você</strong> se forem enxutos e visuais, funcionando como roteiro de explicação. Um bom teste é conseguir olhar apenas para palavras-chave e reconstruir oralmente todo o raciocínio.',
+      'Videoaulas têm potencial alto quando unem imagem e fala. Prefira as que desenham, resolvem ou mostram etapas. Pause em pontos-chave, faça uma anotação curta e explique o trecho antes de seguir.'
+    ],
+    start: [
+      ['1 · VEJA A ESTRUTURA', 'Mapeie conceitos, fórmulas e relações em uma folha.'],
+      ['2 · CONTE A HISTÓRIA', 'Use o mapa como apoio e explique o assunto em voz alta.'],
+      ['3 · RETIRE O APOIO', 'Feche tudo e tente refazer a explicação e o esquema de memória.']
+    ]
+  },
+  VK: {
+    title: 'Você combina representação e ação.',
+    headline: 'Você tende a avançar quando consegue ver como algo funciona e colocar a mão no problema.',
+    summary: 'Seu resultado aproxima duas forças: organizar visualmente e aprender pela aplicação. Isso favorece estudos em que esquemas, modelos e representações servem como ponte para exercícios, construções, experimentos e projetos.',
+    narrative: [
+      'Para você, <strong>um esquema ganha valor quando leva a uma ação</strong>. Em vez de fazer um mapa mental apenas bonito, use-o para resolver uma questão, prever um resultado, montar um modelo ou explicar uma sequência de etapas.',
+      'Anotações à mão podem funcionar muito bem: desenhos, tabelas, setas, fórmulas e resolução comentada transformam o caderno em área de trabalho. <strong>Copiar sem decidir nada</strong> tende a ser menos produtivo.',
+      'Experimentos, maquetes, protótipos, simulações e programas de computador podem ser especialmente ricos porque tornam relações abstratas visíveis e manipuláveis. Depois, registre o princípio aprendido para não ficar apenas na experiência.'
+    ],
+    start: [
+      ['1 · MODELE', 'Faça um desenho, esquema ou representação do problema.'],
+      ['2 · TESTE', 'Use a representação para resolver, construir, simular ou experimentar.'],
+      ['3 · REFAÇA', 'Altere uma condição e tente prever o que muda antes de testar novamente.']
+    ]
+  },
+  AK: {
+    title: 'Você combina linguagem e ação.',
+    headline: 'Seu estudo tende a ficar mais forte quando você fala sobre a ideia e logo a coloca em prática.',
+    summary: 'Ouvir, explicar e fazer aparecem próximos no seu resultado. Você pode ganhar muito com situações em que uma explicação breve é seguida imediatamente de exercício, demonstração, discussão ou produção.',
+    narrative: [
+      'Seu ciclo mais promissor é <strong>ouvir/explicar → testar → explicar de novo</strong>. A prática mostra o que você realmente entendeu; a verbalização depois da prática ajuda a organizar o que aconteceu.',
+      'Videoaulas podem ajudar, principalmente em blocos curtos. Evite maratonas: assista a um trecho, pause e faça algo com ele. Resolva uma questão, reproduza um procedimento ou explique por que cada passo foi necessário.',
+      '<strong>Resumos são mais úteis como fechamento</strong> do que como simples transcrição. Depois de praticar, escreva um pequeno “o que aprendi / onde errei / como reconheço esse tipo de problema” e leia isso em voz alta.'
+    ],
+    start: [
+      ['1 · OUÇA O ESSENCIAL', 'Use uma explicação curta para entender o objetivo e os conceitos-chave.'],
+      ['2 · COLOQUE EM PRÁTICA', 'Resolva, experimente ou produza algo imediatamente.'],
+      ['3 · EXPLIQUE O ERRO', 'Conte em voz alta o que funcionou, o que não funcionou e por quê.']
+    ]
+  },
+  VAK: {
+    title: 'Seu perfil é bastante multimodal.',
+    headline: 'Você parece ter flexibilidade para aprender por diferentes caminhos.',
+    summary: 'As três dimensões ficaram muito próximas. Em vez de depender de um único formato, você pode tirar vantagem de sequências que combinam representação visual, explicação e aplicação — escolhendo o recurso de acordo com o tipo de conteúdo.',
+    narrative: [
+      'Seu resultado sugere <strong>flexibilidade</strong>. Isso é especialmente útil porque nem todo conteúdo pede a mesma estratégia: geometria pode exigir representação; pronúncia pede escuta; laboratório e resolução de problemas pedem ação.',
+      'O desafio de um perfil equilibrado é evitar usar muitos recursos sem profundidade. Em vez de “um pouco de tudo”, monte uma sequência com função clara: <strong>ver para organizar, explicar para testar compreensão e fazer para consolidar</strong>.',
+      'Resumos, leitura, videoaulas, anotações e projetos podem todos ter lugar no seu estudo. O critério principal deve ser: “este recurso está me obrigando a pensar e recuperar o conteúdo ou só está me mantendo ocupado?”'
+    ],
+    start: [
+      ['1 · ORGANIZE', 'Crie uma visão geral visual curta do tema.'],
+      ['2 · EXPLIQUE', 'Reconstrua a ideia com suas palavras, sem depender do material.'],
+      ['3 · APLIQUE', 'Resolva, produza, simule ou responda algo que exija usar o conhecimento.']
+    ]
+  }
+};
+
+const STRATEGIES = [
+  {
+    id:'schemes', title:'Esquemas, mapas e diagramas',
+    base:'Transforme relações, etapas e comparações em uma representação que você consiga reconstruir depois.',
+    weights:{V:1.00,A:.28,K:.58}
+  },
+  {
+    id:'video', title:'Videoaulas',
+    base:'Prefira vídeos curtos e ativos: pause, anote o essencial e produza uma explicação ou resolução antes de continuar.',
+    weights:{V:.82,A:1.00,K:.38}
+  },
+  {
+    id:'practice', title:'Exercícios e problemas',
+    base:'Não use apenas para conferir se “sabe a fórmula”. Resolva sem apoio, analise o erro e tente uma variação do problema.',
+    weights:{V:.42,A:.32,K:1.00}
+  },
+  {
+    id:'projects', title:'Experimentos, modelos e projetos',
+    base:'Maquetes, protótipos, experimentos, simulações e programas tornam o conteúdo um objeto de investigação.',
+    weights:{V:.55,A:.28,K:1.00}
+  },
+  {
+    id:'outloud', title:'Explicar em voz alta',
+    base:'Ensine a ideia para alguém — ou para uma cadeira. Onde a explicação quebra, você encontrou um ponto que precisa rever.',
+    weights:{V:.30,A:1.00,K:.48}
+  },
+  {
+    id:'notes', title:'Anotações à mão',
+    base:'Anote para pensar: reestruture, desenhe, resolva e compare. Evite transformar o caderno em uma cópia do quadro.',
+    weights:{V:.74,A:.38,K:.78}
+  },
+  {
+    id:'summary', title:'Resumos',
+    base:'Faça um resumo depois de estudar, como síntese. Quanto menos cópia e mais reorganização com suas palavras, melhor.',
+    weights:{V:.88,A:.56,K:.52}
+  },
+  {
+    id:'reading', title:'Leitura',
+    base:'Leia com uma pergunta em mente. Pare por trechos, destaque pouco e tente recuperar a ideia sem olhar antes de seguir.',
+    weights:{V:.82,A:.26,K:.24}
+  }
+];
+
+const $ = (sel) => document.querySelector(sel);
+const screens = {
+  landing: $('#landingScreen'),
+  method: $('#methodScreen'),
+  consent: $('#consentScreen'),
+  quiz: $('#quizScreen'),
+  result: $('#resultScreen')
+};
+
+let state = {
+  current: 0,
+  answers: Array(QUESTIONS.length).fill(null),
+  name: '',
+  methodologyAcknowledged: false,
+  dataUseConsent: null,
+  consentTimestamp: null
+};
+
+function freshState() {
+  return {
+    current: 0,
+    answers: Array(QUESTIONS.length).fill(null),
+    name: '',
+    methodologyAcknowledged: false,
+    dataUseConsent: null,
+    consentTimestamp: null
+  };
+}
+
+function saveState() {
+  localStorage.setItem(CONFIG.storageKey, JSON.stringify(state));
+  updateResumeButton();
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONFIG.storageKey) || 'null');
+    if (saved && Array.isArray(saved.answers) && saved.answers.length === QUESTIONS.length) {
+      state = saved;
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+function clearState() {
+  localStorage.removeItem(CONFIG.storageKey);
+  state = freshState();
+  updateResumeButton();
+}
+
+function updateResumeButton() {
+  const hasProgress = state.answers.some(v => v !== null);
+  $('#resumeBtn').classList.toggle('hidden', !hasProgress);
+}
+
+function showScreen(name) {
+  Object.entries(screens).forEach(([key, el]) => el.classList.toggle('hidden', key !== name));
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function startTest(resume=false) {
+  if (!resume) {
+    state = freshState();
+    state.name = $('#studentName').value.trim();
+    saveState();
+    showScreen('method');
+    return;
+  }
+
+  $('#studentName').value = state.name || '';
+  if (!state.methodologyAcknowledged) {
+    showScreen('method');
+  } else if (!state.dataUseConsent) {
+    showScreen('consent');
+    renderConsentChoice();
+  } else {
+    showScreen('quiz');
+    renderQuestion();
+  }
+}
+
+function acknowledgeMethodology() {
+  state.methodologyAcknowledged = true;
+  saveState();
+  showScreen('consent');
+  renderConsentChoice();
+}
+
+function chooseConsent(value) {
+  state.dataUseConsent = value;
+  state.consentTimestamp = new Date().toISOString();
+  saveState();
+  renderConsentChoice();
+}
+
+function renderConsentChoice() {
+  document.querySelectorAll('.consent-option').forEach(btn => {
+    const selected = btn.dataset.consent === state.dataUseConsent;
+    btn.classList.toggle('selected', selected);
+    btn.setAttribute('aria-checked', selected ? 'true' : 'false');
+  });
+  $('#consentContinueBtn').disabled = !state.dataUseConsent;
+}
+
+function beginQuestions() {
+  if (!state.dataUseConsent) return;
+  state.current = Math.max(0, Math.min(state.current || 0, QUESTIONS.length - 1));
+  saveState();
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[state.current];
+  const pct = Math.round(((state.current + 1) / QUESTIONS.length) * 100);
+  $('#progressLabel').textContent = `Questão ${state.current + 1} de ${QUESTIONS.length}`;
+  $('#progressPercent').textContent = `${pct}%`;
+  $('#progressBar').style.width = `${pct}%`;
+  $('.progress-track').setAttribute('aria-valuenow', String(pct));
+  $('#questionNumber').textContent = String(state.current + 1).padStart(2,'0');
+  $('#questionText').textContent = q.prompt;
+  $('#prevBtn').disabled = state.current === 0;
+  $('#nextBtn').textContent = state.current === QUESTIONS.length - 1 ? 'Ver meu resultado →' : 'Continuar →';
+  $('#nextBtn').disabled = state.answers[state.current] === null;
+
+  const list = $('#optionsList');
+  list.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const selected = state.answers[state.current] === idx;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-card' + (selected ? ' selected' : '');
+    btn.setAttribute('role','radio');
+    btn.setAttribute('aria-checked', selected ? 'true' : 'false');
+    btn.innerHTML = `
+      <span class="option-letter">${opt.letter}</span>
+      <span class="option-text"></span>
+      <span class="option-check" aria-hidden="true"></span>`;
+    btn.querySelector('.option-text').textContent = opt.text;
+    btn.addEventListener('click', () => selectOption(idx));
+    list.appendChild(btn);
+  });
+}
+
+function selectOption(idx) {
+  state.answers[state.current] = idx;
+  saveState();
+  renderQuestion();
+  $('#nextBtn').focus();
+}
+
+function nextQuestion() {
+  if (state.answers[state.current] === null) return;
+  if (state.current < QUESTIONS.length - 1) {
+    state.current++;
+    saveState();
+    renderQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    renderResults();
+  }
+}
+
+function previousQuestion() {
+  if (state.current > 0) {
+    state.current--;
+    saveState();
+    renderQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+function calculateScores() {
+  const letters = {A:0, B:0, C:0};
+
+  state.answers.forEach((answerIdx, qIdx) => {
+    if (answerIdx === null) return;
+    const option = QUESTIONS[qIdx].options[answerIdx];
+    letters[option.letter] += 1;
+  });
+
+  // Mapeamento publicado pelo instrumento:
+  // mostly A = Visual; mostly B = Auditivo; mostly C = Cinestésico.
+  const counts = {V: letters.A, A: letters.B, K: letters.C};
+  const total = letters.A + letters.B + letters.C;
+  const pct = {
+    V: total ? (letters.A / total) * 100 : 0,
+    A: total ? (letters.B / total) * 100 : 0,
+    K: total ? (letters.C / total) * 100 : 0
+  };
+
+  return {letters, counts, pct, total};
+}
+
+function determineProfile(counts) {
+  const order = ['V','A','K'];
+  const sorted = order.map(k => [k, counts[k]]).sort((a,b) => b[1] - a[1]);
+  const max = sorted[0][1];
+
+  // O instrumento não fornece margem numérica para definir "blend".
+  // Portanto, a classificação principal segue literalmente "mostly A/B/C".
+  // Somente empate no MAIOR total impede uma única categoria "mostly".
+  const top = order.filter(k => counts[k] === max);
+  const key = top.join('');
+
+  return {
+    key,
+    dominant: top,
+    sorted,
+    gap: sorted[0][1] - sorted[1][1],
+    hasUniqueMostly: top.length === 1
+  };
+}
+
+function balanceText(profile) {
+  if (profile.dominant.length === 3) {
+    return 'Empate no maior total entre A, B e C. O instrumento recomenda considerar as explicações dos estilos correspondentes.';
+  }
+  if (profile.dominant.length === 2) {
+    return 'Empate no maior total entre duas categorias. Não há uma única resposta “mostly”; leia as explicações de ambas.';
+  }
+  return 'Classificação original pelo maior total (“mostly”). O instrumento não define margem numérica para classificar combinações.';
+}
+
+function personalizedIntro(profileData) {
+  const name = state.name ? `${state.name}, ` : '';
+  return name + profileData.summary.charAt(0).toLowerCase() + profileData.summary.slice(1);
+}
+
+
+function formatAppendixDate(isoString) {
+  if (!isoString) return 'Não registrado';
+  try {
+    return new Intl.DateTimeFormat('pt-BR', {
+      dateStyle: 'short',
+      timeStyle: 'medium'
+    }).format(new Date(isoString));
+  } catch (e) {
+    return isoString;
+  }
+}
+
+function escapeAppendixHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderPrintAppendix() {
+  const meta = $('#appendixMeta');
+  const answersContainer = $('#appendixAnswers');
+  if (!meta || !answersContainer) return;
+
+  const consentText = state.dataUseConsent === 'authorized'
+    ? 'SIM — autorizou o uso agregado e sem identificação direta para aprimoramento pedagógico e da ferramenta.'
+    : state.dataUseConsent === 'declined'
+      ? 'NÃO — preferiu não autorizar o uso das respostas para esse fim.'
+      : 'Não registrado.';
+
+  meta.innerHTML = `
+    <div class="appendix-meta-item">
+      <small>Nome informado</small>
+      <strong>${escapeAppendixHtml(state.name || 'Não informado')}</strong>
+    </div>
+    <div class="appendix-meta-item">
+      <small>Data/hora da manifestação</small>
+      <strong>${escapeAppendixHtml(formatAppendixDate(state.consentTimestamp))}</strong>
+    </div>
+    <div class="appendix-meta-item">
+      <small>Aviso metodológico</small>
+      <strong>${state.methodologyAcknowledged ? 'Lido e confirmado (“Entendi”)' : 'Não registrado'}</strong>
+    </div>
+    <div class="appendix-meta-item">
+      <small>Versão do instrumento</small>
+      <strong>${escapeAppendixHtml(CONFIG.instrumentVersion || 'Não informada')}</strong>
+    </div>
+    <div class="appendix-meta-item appendix-consent">
+      <small>Manifestação sobre uso pedagógico dos dados</small>
+      <strong>${escapeAppendixHtml(consentText)}</strong>
+    </div>
+  `;
+
+  answersContainer.innerHTML = QUESTIONS.map((question, questionIndex) => {
+    const answerIndex = state.answers[questionIndex];
+    const selected = Number.isInteger(answerIndex) ? question.options[answerIndex] : null;
+
+    const selectedLetter = selected ? selected.letter : '—';
+    const selectedText = selected ? selected.text : 'Sem resposta registrada';
+
+    return `
+      <article class="appendix-question">
+        <p class="appendix-question-title">
+          ${String(questionIndex + 1).padStart(2, '0')}. ${escapeAppendixHtml(question.prompt)}
+        </p>
+        <div class="appendix-answer">
+          <span class="appendix-answer-letter">${escapeAppendixHtml(selectedLetter)}</span>
+          <span>${escapeAppendixHtml(selectedText)}</span>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+
+function renderResults() {
+  const result = calculateScores();
+  if (result.total !== QUESTIONS.length) return;
+  const profile = determineProfile(result.counts);
+  const data = PROFILES[profile.key] || PROFILES[profile.dominant[0]];
+
+  $('#resultTitle').textContent = state.name ? `${state.name}, ${data.title.charAt(0).toLowerCase() + data.title.slice(1)}` : data.title;
+  $('#resultSummary').textContent = personalizedIntro(data);
+  $('#profileHeadline').textContent = data.headline;
+  $('#profileNarrative').innerHTML = data.narrative.map(p => `<p>${p}</p>`).join('');
+  $('#profileShort').textContent = profile.key === 'VAK' ? 'V·A·C' : profile.key.replace('K','C').split('').join('·');
+  $('#balanceLabel').textContent = balanceText(profile);
+
+  $('#dominantBadges').innerHTML = profile.dominant.map(d => {
+    const letter = d === 'V' ? 'A' : d === 'A' ? 'B' : 'C';
+    const label = profile.hasUniqueMostly ? `Predomínio de ${letter} · ${DIMENSIONS[d].name}` : `Empate ${letter} · ${DIMENSIONS[d].name}`;
+    return `<span class="dominant-badge">${label}</span>`;
+  }).join('');
+
+  const p1 = result.pct.V;
+  const p2 = result.pct.V + result.pct.A;
+  $('#donutChart').style.setProperty('--p1', `${p1.toFixed(2)}%`);
+  $('#donutChart').style.setProperty('--p2', `${p2.toFixed(2)}%`);
+
+  renderScoreCards(result);
+  renderStartHere(data);
+  renderStrategies(result);
+  renderStudyPlan(profile);
+  renderDimensionDetails(result, profile);
+  renderPrintAppendix();
+
+  localStorage.removeItem(CONFIG.storageKey);
+  showScreen('result');
+}
+
+function renderScoreCards(result) {
+  const grid = $('#scoreGrid');
+  const letterFor = {V:'A', A:'B', K:'C'};
+  grid.innerHTML = ['V','A','K'].map(d => {
+    const dim = DIMENSIONS[d];
+    const letter = letterFor[d];
+    const percentValue = result.pct[d].toFixed(1);
+    const percentLabel = percentValue.replace('.', ',');
+    return `
+      <article class="score-card ${dim.className}">
+        <div class="score-card-top">
+          <div class="dim-label">
+            <span class="dim-icon">${letter}</span>
+            <div><strong>${dim.name}</strong><small>${dim.caption}</small></div>
+          </div>
+          <div class="score-number">
+            <div class="score-ring" style="--ring-color:${dim.color}; --ring-percent:${percentValue}%">
+              <div><strong>${Math.round(result.pct[d])}%</strong><small>score</small></div>
+            </div>
+            <small class="score-meta">${result.letters[letter]} respostas ${letter} · ${percentLabel}%</small>
+          </div>
+        </div>
+        <div class="score-bar"><i style="width:${percentValue}%"></i></div>
+        <p class="score-caption">${dim.detail}</p>
+      </article>`;
+  }).join('');
+}
+
+function renderStartHere(data) {
+  $('#startHere').innerHTML = data.start.map(([label,text]) => `
+    <div class="start-step"><span>${label}</span><p>${text}</p></div>`).join('');
+}
+
+function strategyFit(strategy, result) {
+  const normalized = {
+    V: result.counts.V / QUESTIONS.length,
+    A: result.counts.A / QUESTIONS.length,
+    K: result.counts.K / QUESTIONS.length
+  };
+  const raw = normalized.V*strategy.weights.V + normalized.A*strategy.weights.A + normalized.K*strategy.weights.K;
+  const maxWeight = Math.max(strategy.weights.V,strategy.weights.A,strategy.weights.K);
+  return raw / maxWeight;
+}
+
+function methodSpecificTip(id, profileKey) {
+  const tips = {
+    summary: {
+      V:'Faça resumos visuais e compactos: hierarquia, quadros, setas e relações. Depois reconstrua sem olhar.',
+      A:'Use o resumo como roteiro para explicar em voz alta; prefira perguntas e palavras-gatilho a parágrafos copiados.',
+      K:'Faça o resumo depois de exercícios ou prática, registrando princípio, procedimento e erros importantes.',
+      VA:'Combine uma página visual com uma explicação oral feita apenas a partir das palavras-chave.',
+      VK:'Registre esquemas junto de exemplos resolvidos, desenhos, modelos ou etapas de um procedimento.',
+      AK:'Feche a sessão com “o que fiz, onde errei e como explico isso agora”, de preferência lendo e comentando em voz alta.',
+      VAK:'Use resumo como síntese final: uma página visual, uma explicação curta e um exemplo de aplicação.'
+    },
+    reading: {
+      V:'Escaneie a estrutura antes, leia por blocos e converta cada bloco em um pequeno esquema.',
+      A:'Leia trechos curtos e pare para parafrasear em voz alta; audiolivro ou leitura acompanhada pode ser apoio.',
+      K:'Entre na leitura com uma pergunta ou problema real; depois aplique imediatamente uma ideia do texto.',
+      VA:'Leia observando a estrutura e depois explique o trecho sem olhar.',
+      VK:'Leia o necessário para agir: transforme o conceito em exemplo, exercício ou representação.',
+      AK:'Intercale leitura curta, explicação oral e uma tarefa prática.',
+      VAK:'Leia com propósito e sempre gere uma saída: esquema, explicação ou aplicação.'
+    },
+    video: {
+      V:'Prefira vídeos com quadro, animações, gráficos e resolução visível de etapas.',
+      A:'Aproveite a fala do professor, mas pause para repetir o raciocínio com suas palavras.',
+      K:'Assista em blocos curtos e faça algo ao final de cada bloco: uma questão, reprodução ou teste.',
+      VA:'Ótimo formato quando fala e representação visual caminham juntas; pause para resumir e explicar.',
+      VK:'Escolha demonstrações e resoluções; reproduza o procedimento ou mude uma condição para testar.',
+      AK:'Ouça a explicação e imediatamente tente aplicar; evite assistir vários vídeos em sequência.',
+      VAK:'Use vídeo como entrada, não como estudo inteiro: assista, sintetize e pratique.'
+    },
+    notes: {
+      V:'Organize a página para enxergar relações: títulos, espaçamento, símbolos, esquemas e comparações.',
+      A:'Anote perguntas e palavras-chave para depois reconstruir a explicação oralmente.',
+      K:'Use o caderno como bancada de trabalho: resolva, rabisque, desenhe etapas e registre decisões.',
+      VA:'Faça notas visuais que funcionem como roteiro para uma explicação posterior.',
+      VK:'Misture representação, resolução e exemplos; menos transcrição, mais construção.',
+      AK:'Registre o essencial durante a explicação e complete depois da prática, escrevendo o raciocínio.',
+      VAK:'Anote em camadas: estrutura, explicação curta e exemplo aplicado.'
+    },
+    schemes: {
+      V:'Provavelmente será uma das suas ferramentas mais naturais — mas sempre tente reconstruir o esquema de memória.',
+      A:'Depois de montar o esquema, use-o como pauta de uma explicação em voz alta.',
+      K:'Faça esquemas funcionais: fluxos, etapas, mecanismos e representações que ajudem a executar uma tarefa.',
+      VA:'Transforme o esquema em roteiro de fala. Se consegue explicar cada seta, ele está fazendo seu trabalho.',
+      VK:'Use o esquema para prever, testar, resolver ou construir algo.',
+      AK:'Mantenha o esquema simples e use-o para organizar uma explicação seguida de prática.',
+      VAK:'Um bom esquema pode integrar as três dimensões: ver relações, explicar e aplicar.'
+    },
+    practice: {
+      V:'Antes de resolver, desenhe o problema, organize os dados e deixe visível a estrutura da solução.',
+      A:'Explique em voz alta por que escolheu cada passo e compare sua solução com outra possível.',
+      K:'Este tende a ser um recurso central: varie os problemas e trate o erro como informação sobre o que rever.',
+      VA:'Represente o problema e verbalize o raciocínio enquanto resolve.',
+      VK:'Combine desenho/modelo com execução; mude condições e observe como a solução muda.',
+      AK:'Resolva e depois explique o processo, especialmente o erro e a decisão que corrigiu o caminho.',
+      VAK:'Faça prática com três camadas: representação, justificativa e execução.'
+    },
+    projects: {
+      V:'Use modelos e protótipos para tornar relações abstratas visíveis e comparáveis.',
+      A:'Inclua apresentação, discussão ou explicação do projeto; falar sobre o que produziu amplia o valor.',
+      K:'Projetos, experimentos e programação podem ser especialmente ricos: defina hipótese, teste e registre o que mudou.',
+      VA:'Documente visualmente o projeto e prepare uma explicação curta do processo.',
+      VK:'Excelente combinação: planeje visualmente, construa/teste e compare o previsto com o observado.',
+      AK:'Trabalhe em ciclos de orientação curta, execução e relato do que aconteceu.',
+      VAK:'Projetos integram muito bem seu perfil: planejar, conversar, construir, testar e comunicar.'
+    },
+    outloud: {
+      V:'Explique olhando apenas para um esquema enxuto e, depois, tente sem apoio visual.',
+      A:'Uma das suas estratégias mais promissoras: explique, grave trechos curtos e escute procurando lacunas.',
+      K:'Explique depois de fazer algo; descreva o procedimento, a decisão e o motivo do resultado.',
+      VA:'Use diagramas como gatilho e desenvolva a explicação oral sem ler frases prontas.',
+      VK:'Mostre ou desenhe enquanto explica como o processo funciona.',
+      AK:'Explique enquanto resolve e faça uma segunda explicação depois de corrigir os erros.',
+      VAK:'Use a explicação como ponte entre o que você viu e o que consegue aplicar.'
+    }
+  };
+  return (tips[id] && tips[id][profileKey]) || null;
+}
+
+function renderStrategies(result) {
+  const profile = determineProfile(result.counts);
+  const ranked = STRATEGIES
+    .map(s => ({...s,fit:strategyFit(s,result)}))
+    .sort((a,b)=>b.fit-a.fit);
+
+  $('#strategyGrid').innerHTML = ranked.map((s,idx) => {
+    const relative = idx < 3 ? ['Priorize','fit-high'] : idx < 6 ? ['Use junto','fit-medium'] : ['Complementa','fit-support'];
+    const tip = methodSpecificTip(s.id, profile.key) || s.base;
+    return `
+      <article class="strategy-card">
+        <div class="strategy-rank">${String(idx+1).padStart(2,'0')}</div>
+        <div><h3>${s.title}</h3><p>${tip}</p></div>
+        <span class="fit-tag ${relative[1]}">${relative[0]}</span>
+      </article>`;
+  }).join('');
+}
+
+function renderStudyPlan(profile) {
+  const key = profile.key;
+  const plans = {
+    V:[
+      ['ANTES','Faça um mapa de 5 minutos com títulos, conceitos e relações.'],
+      ['DURANTE','Estude em blocos e converta cada bloco em esquema, tabela, gráfico ou exemplo visual.'],
+      ['DEPOIS','Feche o material e reconstrua a página de memória; então resolva uma questão.']
+    ],
+    A:[
+      ['ANTES','Formule perguntas e procure uma explicação curta que dê visão geral do assunto.'],
+      ['DURANTE','Pause regularmente e explique com suas palavras, sem repetir frases do professor.'],
+      ['DEPOIS','Responda às perguntas em voz alta e só então confira o material.']
+    ],
+    K:[
+      ['ANTES','Comece com um desafio, problema, demonstração ou situação concreta.'],
+      ['DURANTE','Faça, teste, resolva e registre as decisões e erros que aparecem.'],
+      ['DEPOIS','Extraia a regra geral e aplique em um problema diferente do primeiro.']
+    ],
+    VA:[
+      ['ANTES','Crie uma visão geral visual e transforme os títulos em perguntas.'],
+      ['DURANTE','Veja a estrutura e explique cada parte com suas palavras.'],
+      ['DEPOIS','Recrie o esquema sem olhar e faça uma explicação de 2 minutos.']
+    ],
+    VK:[
+      ['ANTES','Represente o problema com desenho, modelo, fluxo ou tabela.'],
+      ['DURANTE','Use essa representação para resolver, testar ou construir algo.'],
+      ['DEPOIS','Mude uma variável, faça uma previsão e teste se sua representação continua funcionando.']
+    ],
+    AK:[
+      ['ANTES','Ouça ou leia uma explicação curta para entender o objetivo da tarefa.'],
+      ['DURANTE','Aplique imediatamente e verbalize por que está escolhendo cada passo.'],
+      ['DEPOIS','Explique o erro mais importante e resolva uma variação do problema.']
+    ],
+    VAK:[
+      ['ANTES','Organize a estrutura do tema em uma representação curta.'],
+      ['DURANTE','Explique o raciocínio e intercale com questões ou aplicações.'],
+      ['DEPOIS','Sem material, produza uma síntese + explicação + exemplo de uso.']
+    ]
+  };
+  $('#studyPlan').innerHTML = plans[key].map(([label,title],idx)=>`
+    <article class="plan-card">
+      <span>${String(idx+1).padStart(2,'0')} · ${label}</span>
+      <h3>${['Prepare o terreno','Processe ativamente','Recupere e aplique'][idx]}</h3>
+      <p>${title}</p>
+    </article>`).join('');
+}
+
+function renderDimensionDetails(result, profile) {
+  $('#dimensionDetails').innerHTML = ['V','A','K'].map(d => {
+    const dim = DIMENSIONS[d];
+    const isDominant = profile.dominant.includes(d);
+    return `
+      <article class="dimension-card ${dim.className}">
+        <div class="dimension-title">
+          <strong>${dim.name}</strong>
+          <span>${Math.round(result.pct[d])}% · ${result.counts[d]} respostas${isDominant ? ' · em destaque' : ''}</span>
+        </div>
+        <div class="dimension-body">
+          <p>${dim.detail} Ela pode ser útil como <strong>porta de entrada</strong>, mas ganha mais força quando você precisa recuperar, explicar ou aplicar o que estudou.</p>
+          <ul>${dim.ideas.map(item=>`<li>${item}</li>`).join('')}</ul>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function buildPedagogicalDataPayload() {
+  if (state.dataUseConsent !== 'authorized') return null;
+  const result = calculateScores();
+  const profile = determineProfile(result.counts);
+  return {
+    instrumentVersion: CONFIG.instrumentVersion,
+    methodologyNoticeVersion: CONFIG.methodologyNoticeVersion,
+    consentVersion: CONFIG.consentVersion,
+    consentTimestamp: state.consentTimestamp,
+    answers: state.answers.map((answerIdx, qIdx) => {
+      const option = QUESTIONS[qIdx].options[answerIdx];
+      return {
+        questionId: QUESTIONS[qIdx].id,
+        selectedLetter: option.letter
+      };
+    }),
+    originalScoring: {
+      A: result.letters.A,
+      B: result.letters.B,
+      C: result.letters.C
+    },
+    mappedStyles: {
+      Visual: result.counts.V,
+      Auditivo: result.counts.A,
+      Cinestésico: result.counts.K
+    },
+    percentagesForDisplayOnly: {
+      Visual: result.pct.V,
+      Auditivo: result.pct.A,
+      Cinestésico: result.pct.K
+    },
+    classification: {
+      highestCategories: profile.dominant.map(d => d === 'V' ? 'A' : d === 'A' ? 'B' : 'C'),
+      uniqueMostlyCategory: profile.hasUniqueMostly
+        ? (profile.dominant[0] === 'V' ? 'A' : profile.dominant[0] === 'A' ? 'B' : 'C')
+        : null
+    }
+  };
+}
+
+function copyResult() {
+  const result = calculateScores();
+  const profile = determineProfile(result.counts);
+  const data = PROFILES[profile.key] || PROFILES[profile.dominant[0]];
+  const styleNames = profile.dominant.map(d => DIMENSIONS[d].name).join(' + ');
+  const originalClass = profile.hasUniqueMostly
+    ? `Predomínio de ${profile.dominant[0] === 'V' ? 'A' : profile.dominant[0] === 'A' ? 'B' : 'C'} → ${styleNames}`
+    : `Empate no maior total → ${styleNames}`;
+
+  const text = `VAK Learning Styles Self-Assessment Questionnaire — Chislett & Chapman (2005)
+${state.name ? 'Nome: '+state.name+'\n' : ''}Classificação pelo instrumento: ${originalClass}
+
+Scoring original:
+A = ${result.letters.A} → Visual (${result.pct.V.toFixed(1)}%)
+B = ${result.letters.B} → Auditivo (${result.pct.A.toFixed(1)}%)
+C = ${result.letters.C} → Cinestésico (${result.pct.K.toFixed(1)}%)
+
+Observação: os percentuais são apenas representação gráfica das contagens; não alteram o scoring original.
+Uso pedagógico dos dados: ${state.dataUseConsent === 'authorized' ? 'autorizado' : 'não autorizado'}
+
+${data.headline}
+${data.summary}`;
+
+  navigator.clipboard?.writeText(text)
+    .then(()=>toast('Resumo copiado.'))
+    .catch(()=>toast('Não foi possível copiar automaticamente.'));
+}
+
+function toast(message) {
+  const el = $('#toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+$('#startBtn').addEventListener('click',()=>startTest(false));
+$('#resumeBtn').addEventListener('click',()=>startTest(true));
+$('#methodAcceptBtn').addEventListener('click', acknowledgeMethodology);
+$('#methodBackBtn').addEventListener('click',()=>showScreen('landing'));
+$('#consentBackBtn').addEventListener('click',()=>showScreen('method'));
+$('#consentContinueBtn').addEventListener('click', beginQuestions);
+document.querySelectorAll('.consent-option').forEach(btn => btn.addEventListener('click',()=>chooseConsent(btn.dataset.consent)));
+document.querySelectorAll('.onboarding-home').forEach(btn => btn.addEventListener('click',()=>{ saveState(); showScreen('landing'); updateResumeButton(); }));
+$('#nextBtn').addEventListener('click',nextQuestion);
+$('#prevBtn').addEventListener('click',previousQuestion);
+$('#quitBtn').addEventListener('click',()=>{ saveState(); showScreen('landing'); updateResumeButton(); });
+$('#restartBtn').addEventListener('click',()=>{ clearState(); $('#studentName').value=''; showScreen('landing'); });
+$('#printBtn').addEventListener('click',()=>window.print());
+$('#copyBtn').addEventListener('click',copyResult);
+document.querySelectorAll('[data-action="home"]').forEach(el=>el.addEventListener('click',(e)=>{e.preventDefault();showScreen('landing');}));
+
+document.addEventListener('keydown',(e)=>{
+  if (screens.quiz.classList.contains('hidden')) return;
+  if (['1','2','3'].includes(e.key)) selectOption(Number(e.key)-1);
+  if (e.key === 'Enter' && !$('#nextBtn').disabled) nextQuestion();
+  if (e.key === 'ArrowLeft') previousQuestion();
+});
+
+loadState();
+$('#studentName').value = state.name || '';
+renderConsentChoice();
+updateResumeButton();
+
+  </script>
+</body>
+</html>
